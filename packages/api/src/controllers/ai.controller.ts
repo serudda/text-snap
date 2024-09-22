@@ -139,7 +139,7 @@ export const dispatchFormatHandler = async ({ ctx, input }: Params<DispatchForma
   }
 };
 
-export const grammarHandler = async ({ ctx, input }: Params<GrammarInputType>) => {
+export const grammarHandler = async ({ input }: Params<GrammarInputType>) => {
   try {
     const { text } = input;
 
@@ -187,21 +187,13 @@ export const grammarHandler = async ({ ctx, input }: Params<GrammarInputType>) =
   }
 };
 
-export const improveHandler = async ({ ctx, input }: Params<ImproveInputType>) => {
+export const improveHandler = async ({ input }: Params<ImproveInputType>) => {
   try {
-    const { text, config } = input;
+    const { text } = input;
 
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    headers.append('Authorization', `Bearer ${process.env.SUPABASE_PROJECT_ANON_KEY as string}`);
+    console.log('text - (improve)', text);
 
-    console.log('config - (improve)', config);
-
-    const response = await fetch(`${process.env.SUPABASE_EDGE_FUNCTIONS_URL}/improve`, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({ text, config }),
-    });
+    const response = await grammarAIHandler(text);
 
     console.log('response - (improve)', response);
     const result = (await response.json()) as string;
@@ -241,21 +233,13 @@ export const improveHandler = async ({ ctx, input }: Params<ImproveInputType>) =
   }
 };
 
-export const formalityHandler = async ({ ctx, input }: Params<FormalityInputType>) => {
+export const formalityHandler = async ({ input }: Params<FormalityInputType>) => {
   try {
-    const { text, config } = input;
+    const { text } = input;
 
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    headers.append('Authorization', `Bearer ${process.env.SUPABASE_PROJECT_ANON_KEY as string}`);
+    console.log('text - (formality)', text);
 
-    console.log('config - (formality)', config);
-
-    const response = await fetch(`${process.env.SUPABASE_EDGE_FUNCTIONS_URL}/formality`, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({ text, config }),
-    });
+    const response = await grammarAIHandler(text);
 
     console.log('response - (formality)', response);
     const result = (await response.json()) as string;
@@ -295,19 +279,13 @@ export const formalityHandler = async ({ ctx, input }: Params<FormalityInputType
   }
 };
 
-export const translateHandler = async ({ ctx, input }: Params<TranslateInputType>) => {
+export const translateHandler = async ({ input }: Params<TranslateInputType>) => {
   try {
-    const { text, config } = input;
+    const { text } = input;
 
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    headers.append('Authorization', `Bearer ${process.env.SUPABASE_PROJECT_ANON_KEY as string}`);
+    console.log('text - (translate)', text);
 
-    const response = await fetch(`${process.env.SUPABASE_EDGE_FUNCTIONS_URL}/translate`, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({ text, config }),
-    });
+    const response = await grammarAIHandler(text);
 
     console.log('response - (translate)', response);
     const result = (await response.json()) as string;
@@ -347,19 +325,13 @@ export const translateHandler = async ({ ctx, input }: Params<TranslateInputType
   }
 };
 
-export const emojiHandler = async ({ ctx, input }: Params<EmojiInputType>) => {
+export const emojiHandler = async ({ input }: Params<EmojiInputType>) => {
   try {
-    const { text, config } = input;
+    const { text } = input;
 
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    headers.append('Authorization', `Bearer ${process.env.SUPABASE_PROJECT_ANON_KEY as string}`);
+    console.log('text - (emoji)', text);
 
-    const response = await fetch(`${process.env.SUPABASE_EDGE_FUNCTIONS_URL}/emoji`, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({ text, config }),
-    });
+    const response = await grammarAIHandler(text);
 
     console.log('response - (emoji)', response);
     const result = (await response.json()) as string;
@@ -399,19 +371,13 @@ export const emojiHandler = async ({ ctx, input }: Params<EmojiInputType>) => {
   }
 };
 
-export const condenseHandler = async ({ ctx, input }: Params<CondenseInputType>) => {
+export const condenseHandler = async ({ input }: Params<CondenseInputType>) => {
   try {
-    const { text, config } = input;
+    const { text } = input;
 
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    headers.append('Authorization', `Bearer ${process.env.SUPABASE_PROJECT_ANON_KEY as string}`);
+    console.log('text - (condense)', text);
 
-    const response = await fetch(`${process.env.SUPABASE_EDGE_FUNCTIONS_URL}/condense`, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({ text, config }),
-    });
+    const response = await grammarAIHandler(text);
 
     console.log('response - (condense)', response);
     const result = (await response.json()) as string;
