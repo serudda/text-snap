@@ -1,4 +1,4 @@
-import { defaultTemperature, defaultModel as modelName, TranslateFormatConfig } from '../common';
+import { defaultTemperature, defaultModel as modelName, type TranslateFormatConfig } from '../common';
 import { buildTemplate } from './prompt';
 import { PromptTemplate } from '@langchain/core/prompts';
 import { OpenAI } from '@langchain/openai';

@@ -1,4 +1,4 @@
-import { defaultTemperature, EmojiFormatConfig, defaultModel as modelName } from '../common';
+import { defaultTemperature, defaultModel as modelName } from '../common';
 import { buildTemplate } from './prompt';
 import { PromptTemplate } from '@langchain/core/prompts';
 import { OpenAI } from '@langchain/openai';

@@ -1,4 +1,4 @@
-import { defaultTemperature, FormalityFormatConfig, defaultModel as modelName } from '../common';
+import { defaultTemperature, defaultModel as modelName, type FormalityFormatConfig } from '../common';
 import { detectLanguageHandler } from '../detectLanguage/handler';
 import { buildTemplate } from './prompt';
 import { PromptTemplate } from '@langchain/core/prompts';
@@ -20,7 +20,7 @@ export const formalityHandler = async (text: string, config: FormalityFormatConf
   const presencePenalty = 0;
 
   // Detect language of the text
-  const detectRes = await detectLanguageHandler(text as string);
+  const detectRes = await detectLanguageHandler(text);
 
   const model = new OpenAI({
     temperature,

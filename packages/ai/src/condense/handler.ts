@@ -1,4 +1,4 @@
-import { CondenseFormatConfig, defaultTemperature, defaultModel as modelName } from '../common';
+import { defaultTemperature, defaultModel as modelName, type CondenseFormatConfig } from '../common';
 import { detectLanguageHandler } from '../detectLanguage/handler';
 import { buildTemplate } from './prompt';
 import { PromptTemplate } from '@langchain/core/prompts';
