@@ -1,4 +1,8 @@
-import { grammarHandler as grammarAIHandler, improveHandler as improveAIHandler } from '@acme/ai';
+import {
+  condenseHandler as condenseAIHandler,
+  grammarHandler as grammarAIHandler,
+  improveHandler as improveAIHandler,
+} from '@acme/ai';
 import { ChangeScale, EmojiPosition, FormalityScale, Format, Response, TRPCErrorCode, type Params } from '../common';
 import type {
   CondenseInputType,
@@ -373,11 +377,11 @@ export const emojiHandler = async ({ input }: Params<EmojiInputType>) => {
 
 export const condenseHandler = async ({ input }: Params<CondenseInputType>) => {
   try {
-    const { text } = input;
+    const { text, config } = input;
 
     console.log('text - (condense)', text);
 
-    const response = await grammarAIHandler(text);
+    const response = await condenseAIHandler(text, config);
 
     console.log('response - (condense)', response);
     const result = (await response.json()) as string;
