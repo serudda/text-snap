@@ -1,6 +1,7 @@
 import {
   condenseHandler as condenseAIHandler,
   emojiHandler as emojiAIHandler,
+  formalityHandler as formalityAIHandler,
   grammarHandler as grammarAIHandler,
   improveHandler as improveAIHandler,
   translateHandler as translateAIHandler,
@@ -241,11 +242,11 @@ export const improveHandler = async ({ input }: Params<ImproveInputType>) => {
 
 export const formalityHandler = async ({ input }: Params<FormalityInputType>) => {
   try {
-    const { text } = input;
+    const { text, config } = input;
 
     console.log('text - (formality)', text);
 
-    const response = await grammarAIHandler(text);
+    const response = await formalityAIHandler(text, config);
 
     console.log('response - (formality)', response);
     const result = (await response.json()) as string;
