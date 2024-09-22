@@ -2,17 +2,16 @@ import { useEffect, useState } from 'react';
 import { DEFAULT_SHORTCUTS, type ShortcutType } from '~/common/constants';
 
 /**
- * The useHotkeySettings function manages and persists
- * user-defined keyboard shortcuts in a React application.
+ * The `useHotkeySettings` function manages user-defined
+ * keyboard shortcuts in a React component, storing them in
+ * local storage and providing functions to update and reset
+ * the shortcuts.
  *
  * @returns The `useHotkeySettings` custom hook is being
- *   returned. It returns an object with two properties:
- *
- *   1. `shortcuts`: The current state of shortcuts, initialized
- *        with `DEFAULT_SHORTCUTS` or retrieved from
- *        localStorage.
- *   2. `handleShortcutChange`: A function that updates the
- *        shortcuts state when a shortcut key is changed.
+ *   returned, which provides access to the `shortcuts`
+ *   state, `handleShortcutChange` function to update
+ *   shortcuts, and `resetShortcuts` function to reset
+ *   shortcuts to default values.
  */
 export const useHotkeySettings = () => {
   const [shortcuts, setShortcuts] = useState<ShortcutType>(DEFAULT_SHORTCUTS);
@@ -41,8 +40,14 @@ export const useHotkeySettings = () => {
       [key]: newShortcut,
     }));
   };
+
+  const resetShortcuts = () => {
+    setShortcuts(DEFAULT_SHORTCUTS);
+    localStorage.setItem('shortcuts', JSON.stringify(DEFAULT_SHORTCUTS));
+  };
   return {
     shortcuts,
     handleShortcutChange,
+    resetShortcuts,
   };
 };
