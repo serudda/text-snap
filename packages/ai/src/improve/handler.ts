@@ -19,7 +19,7 @@ export const improveHandler = async (text: string): Promise<Response> => {
   const presencePenalty = 0;
 
   // Detect language of the text
-  const detectRes = await detectLanguageHandler(text as string);
+  const detectRes = await detectLanguageHandler(text);
 
   const model = new OpenAI({
     temperature,

@@ -1,4 +1,4 @@
-import { Example } from '../common';
+import { type Example } from '../common';
 import dedent from 'dedent';
 
 export const getExample = (): Array<Example> => {

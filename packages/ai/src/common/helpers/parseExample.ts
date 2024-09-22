@@ -1,4 +1,4 @@
-import { Example } from '../types';
+import { type Example } from '../types';
 
 export const parseExamples = (examples: Array<Example>): string => {
   const parsedExamples = examples.map((example) => {
