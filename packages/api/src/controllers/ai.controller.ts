@@ -1,5 +1,16 @@
-import { grammarHandler as grammarAIHandler } from '@acme/ai';
-import { ChangeScale, EmojiPosition, FormalityScale, Format, Response, TRPCErrorCode, type Params } from '../common';
+import {
+  ChangeScale,
+  condenseHandler as condenseAIHandler,
+  emojiHandler as emojiAIHandler,
+  EmojiPosition,
+  formalityHandler as formalityAIHandler,
+  FormalityScale,
+  Format,
+  grammarHandler as grammarAIHandler,
+  improveHandler as improveAIHandler,
+  translateHandler as translateAIHandler,
+} from '@acme/ai';
+import { Response, TRPCErrorCode, type Params } from '../common';
 import type {
   CondenseInputType,
   DispatchFormatInputType,
@@ -34,7 +45,7 @@ export const dispatchFormatHandler = async ({ ctx, input }: Params<DispatchForma
           input: {
             text: formattedText,
             config: {
-              scale: selectedFormat.config?.scale || ChangeScale.subtle,
+              scale: ChangeScale.subtle,
             },
           },
         });
@@ -48,7 +59,7 @@ export const dispatchFormatHandler = async ({ ctx, input }: Params<DispatchForma
           input: {
             text: formattedText,
             config: {
-              formalityScale: selectedFormat.config?.formalityScale || FormalityScale.formal,
+              formalityScale: FormalityScale.formal,
             },
           },
         });
@@ -76,8 +87,8 @@ export const dispatchFormatHandler = async ({ ctx, input }: Params<DispatchForma
           input: {
             text: formattedText,
             config: {
-              position: selectedFormat.config?.position || EmojiPosition.randomly,
-              scale: selectedFormat.config?.scale || ChangeScale.subtle,
+              position: EmojiPosition.randomly,
+              scale: ChangeScale.subtle,
             },
           },
         });
@@ -193,7 +204,7 @@ export const improveHandler = async ({ input }: Params<ImproveInputType>) => {
 
     console.log('text - (improve)', text);
 
-    const response = await grammarAIHandler(text);
+    const response = await improveAIHandler(text);
 
     console.log('response - (improve)', response);
     const result = (await response.json()) as string;
@@ -235,11 +246,11 @@ export const improveHandler = async ({ input }: Params<ImproveInputType>) => {
 
 export const formalityHandler = async ({ input }: Params<FormalityInputType>) => {
   try {
-    const { text } = input;
+    const { text, config } = input;
 
     console.log('text - (formality)', text);
 
-    const response = await grammarAIHandler(text);
+    const response = await formalityAIHandler(text, config);
 
     console.log('response - (formality)', response);
     const result = (await response.json()) as string;
@@ -281,11 +292,11 @@ export const formalityHandler = async ({ input }: Params<FormalityInputType>) =>
 
 export const translateHandler = async ({ input }: Params<TranslateInputType>) => {
   try {
-    const { text } = input;
+    const { text, config } = input;
 
     console.log('text - (translate)', text);
 
-    const response = await grammarAIHandler(text);
+    const response = await translateAIHandler(text, config);
 
     console.log('response - (translate)', response);
     const result = (await response.json()) as string;
@@ -331,7 +342,7 @@ export const emojiHandler = async ({ input }: Params<EmojiInputType>) => {
 
     console.log('text - (emoji)', text);
 
-    const response = await grammarAIHandler(text);
+    const response = await emojiAIHandler(text);
 
     console.log('response - (emoji)', response);
     const result = (await response.json()) as string;
@@ -373,11 +384,11 @@ export const emojiHandler = async ({ input }: Params<EmojiInputType>) => {
 
 export const condenseHandler = async ({ input }: Params<CondenseInputType>) => {
   try {
-    const { text } = input;
+    const { text, config } = input;
 
     console.log('text - (condense)', text);
 
-    const response = await grammarAIHandler(text);
+    const response = await condenseAIHandler(text, config);
 
     console.log('response - (condense)', response);
     const result = (await response.json()) as string;

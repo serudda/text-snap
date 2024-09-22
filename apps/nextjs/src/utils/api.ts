@@ -1,7 +1,7 @@
+import type { AppRouter } from '@acme/api';
 import { httpBatchLink, loggerLink } from '@trpc/client';
 import { createTRPCNext } from '@trpc/next';
 import superjson from 'superjson';
-import type { AppRouter } from '@acme/api';
 
 const getBaseUrl = () => {
   if (typeof window !== 'undefined') return ''; // browser should use relative url
@@ -17,8 +17,7 @@ export const api = createTRPCNext<AppRouter>({
       links: [
         loggerLink({
           enabled: (opts) =>
-            process.env.NODE_ENV !== 'production' ||
-            (opts.direction === 'down' && opts.result instanceof Error),
+            process.env.NODE_ENV !== 'production' || (opts.direction === 'down' && opts.result instanceof Error),
         }),
         httpBatchLink({
           url: `${getBaseUrl()}/api/trpc`,
@@ -30,5 +29,6 @@ export const api = createTRPCNext<AppRouter>({
 });
 
 export { type RouterInputs, type RouterOutputs } from '@acme/api';
+export { Format } from '@acme/ai';
 export * from '@acme/api/src/common';
 export * from '@acme/db/common';
