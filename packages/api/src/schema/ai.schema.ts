@@ -1,4 +1,4 @@
-import { ChangeScale, FormalityScale, Format } from '../common';
+import { ChangeScale, FormalityScale, Format } from '@acme/ai';
 import { z, type TypeOf } from 'zod';
 
 /*------------------------------------*/

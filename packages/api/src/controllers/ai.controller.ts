@@ -1,12 +1,16 @@
 import {
+  ChangeScale,
   condenseHandler as condenseAIHandler,
   emojiHandler as emojiAIHandler,
+  EmojiPosition,
   formalityHandler as formalityAIHandler,
+  FormalityScale,
+  Format,
   grammarHandler as grammarAIHandler,
   improveHandler as improveAIHandler,
   translateHandler as translateAIHandler,
 } from '@acme/ai';
-import { ChangeScale, EmojiPosition, FormalityScale, Format, Response, TRPCErrorCode, type Params } from '../common';
+import { Response, TRPCErrorCode, type Params } from '../common';
 import type {
   CondenseInputType,
   DispatchFormatInputType,
@@ -41,7 +45,7 @@ export const dispatchFormatHandler = async ({ ctx, input }: Params<DispatchForma
           input: {
             text: formattedText,
             config: {
-              scale: selectedFormat.config?.scale || ChangeScale.subtle,
+              scale: ChangeScale.subtle,
             },
           },
         });
@@ -55,7 +59,7 @@ export const dispatchFormatHandler = async ({ ctx, input }: Params<DispatchForma
           input: {
             text: formattedText,
             config: {
-              formalityScale: selectedFormat.config?.formalityScale || FormalityScale.formal,
+              formalityScale: FormalityScale.formal,
             },
           },
         });
@@ -83,8 +87,8 @@ export const dispatchFormatHandler = async ({ ctx, input }: Params<DispatchForma
           input: {
             text: formattedText,
             config: {
-              position: selectedFormat.config?.position || EmojiPosition.randomly,
-              scale: selectedFormat.config?.scale || ChangeScale.subtle,
+              position: EmojiPosition.randomly,
+              scale: ChangeScale.subtle,
             },
           },
         });
