@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  pull_request:
+    branches: ['*']
+  push:
+    branches: ['main']
+  merge_group:
+
+# You can leverage Vercel Remote Caching with Turbo to speed up your builds
+# @link https://turborepo.org/docs/core-concepts/remote-caching#remote-caching-on-vercel-builds
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+
+jobs:
+  build-lint:
+    env:
+      DATABASE_URL: file:./db.sqlite
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js (v20.13.1)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.13.1
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+
+      - name: Cache pnpm Store
+        uses: actions/cache@v4
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: ${{ runner.os }}-pnpm-
+
+      - name: Install deps (with cache)
+        run: pnpm install
+
+      # Normally, this would be done as part of the turbo pipeline - however since the Expo app doesn't depend on `@acme/db` it doesn't care.
+      # TODO: Free for all to find a better solution here.
+      - name: Generate Prisma Client
+        run: pnpm turbo db:generate
+
+      - name: Build, lint and type-check
+        run: pnpm turbo build lint type-check
+        env:
+          SKIP_ENV_VALIDATION: true
+
+      - name: Check workspaces
+        run: pnpm manypkg check

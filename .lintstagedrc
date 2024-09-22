@@ -1,0 +1,4 @@
+{
+  "apps/**/*.{js,ts,jsx,tsx}": ["prettier --write --ignore-unknown", "eslint --fix"],
+  "package.json": ["manypkg fix"]
+}
