@@ -3,6 +3,7 @@ import {
   emojiHandler as emojiAIHandler,
   grammarHandler as grammarAIHandler,
   improveHandler as improveAIHandler,
+  translateHandler as translateAIHandler,
 } from '@acme/ai';
 import { ChangeScale, EmojiPosition, FormalityScale, Format, Response, TRPCErrorCode, type Params } from '../common';
 import type {
@@ -286,11 +287,11 @@ export const formalityHandler = async ({ input }: Params<FormalityInputType>) =>
 
 export const translateHandler = async ({ input }: Params<TranslateInputType>) => {
   try {
-    const { text } = input;
+    const { text, config } = input;
 
     console.log('text - (translate)', text);
 
-    const response = await grammarAIHandler(text);
+    const response = await translateAIHandler(text, config);
 
     console.log('response - (translate)', response);
     const result = (await response.json()) as string;
