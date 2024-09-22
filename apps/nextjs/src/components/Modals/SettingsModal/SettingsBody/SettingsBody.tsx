@@ -25,7 +25,7 @@ export const SettingsBody = ({ className }: SettingsBodyProps) => {
     shortcutContainer: cn('grid items-center gap-4'),
     shortcutText: cn('min-w-28 text-xl font-semibold'),
   };
-
+  // TODO: Obtener formatos de Format <Serudda>
   const settingsArray: Array<{ key: SettingsKey; label: string }> = [
     { key: 'translate', label: 'Translate' },
     { key: 'grammar', label: 'Grammar' },
