@@ -20,7 +20,7 @@ const config = {
   tailwindFunctions: ['cn', 'clsx', 'cva'],
 
   /** JSdoc Plugin Config. */
-  jsdocPrintWidth: 80,
+  jsdocPrintWidth: 60,
   tsdoc: true,
   jsdocDescriptionWithDot: true,
   jsdocCapitalizeDescription: false,
