@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { cn, TextInput } from 'side-ui';
+import { DEFAULT_SHORTCUTS, useHotkeySettings, useRecordHotkeys } from '~/common';
+import { Button, ButtonSize, cn } from 'side-ui';
 
 export interface SettingsBodyProps {
   /**
@@ -21,10 +22,15 @@ type SettingsKey = keyof SettingsState;
 
 export const SettingsBody = ({ className }: SettingsBodyProps) => {
   const classes = {
-    container: cn('grid gap-6 px-6 py-10 text-white', className),
+    container: cn('grid grid-cols-2 gap-6 px-6 py-10 text-white', className),
     shortcutContainer: cn('grid items-center gap-4'),
     shortcutText: cn('min-w-28 text-xl font-semibold'),
   };
+
+  const [currentKey, setCurrentKey] = useState<SettingsKey | null>(null);
+  const { shortcuts, handleShortcutChange, resetShortcuts } = useHotkeySettings();
+  const { keys, isRecording, start, stop } = useRecordHotkeys();
+
   // TODO: Obtener formatos de Format <Serudda>
   const settingsArray: Array<{ key: SettingsKey; label: string }> = [
     { key: 'translate', label: 'Translate' },
@@ -35,35 +41,54 @@ export const SettingsBody = ({ className }: SettingsBodyProps) => {
     { key: 'improve', label: 'Improve' },
   ];
 
-  const [settings, setSettings] = useState<SettingsState>({
-    translate: 'CTRL + T',
-    grammar: 'CTRL + G',
-    condense: 'CTRL + C',
-    formality: 'CTRL + F',
-    emoji: 'CTRL + E',
-    improve: 'CTRL + I',
-  });
+  const toggleRecording = (key: SettingsKey) => {
+    if (isRecording && currentKey === key) {
+      stop();
+      if (keys.size > 0) {
+        const recordedShortcut = Array.from(keys).join(' + ');
+        handleShortcutChange(key, recordedShortcut);
+      }
+      setCurrentKey(null);
+    } else {
+      setCurrentKey(key);
+      start();
+    }
+  };
 
   const renderSettings = () => (
     <>
       {settingsArray.map(({ key, label }) => (
         <div key={key} className={classes.shortcutContainer}>
           <p className={classes.shortcutText}>{label}:</p>
-          <TextInput
-            value={settings[key]}
-            onChange={(e) =>
-              setSettings((prevSettings) => ({
-                ...prevSettings,
-                [key]: e.target.value,
-              }))
-            }
-            disabled
-            inputContainerClassName="border dark:border-neutral-600 dark:bg-neutral-950 max-w-56"
-          />
+          <div className="flex select-none items-center gap-4">
+            <p
+              className={cn('uppercase text-white', {
+                'text-neutral-400': shortcuts[key] === DEFAULT_SHORTCUTS[key],
+              })}
+            >
+              {shortcuts[key]}
+            </p>
+            <Button
+              onClick={() => toggleRecording(key)}
+              size={ButtonSize.sm}
+              className={cn('bg-neutral-800 text-white hover:bg-primary-700', {
+                'bg-red-500 hover:bg-red-700': isRecording && currentKey === key,
+              })}
+            >
+              {isRecording && currentKey === key ? '■' : '⬤'}
+            </Button>
+          </div>
         </div>
       ))}
     </>
   );
 
-  return <div className={classes.container}>{renderSettings()}</div>;
+  return (
+    <div className={classes.container}>
+      {renderSettings()}
+      <Button className="col-start-1 col-end-3 mt-4" onClick={resetShortcuts}>
+        Reset Shortcuts
+      </Button>
+    </div>
+  );
 };
