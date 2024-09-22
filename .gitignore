@@ -4,6 +4,7 @@ postgres_data
 node_modules
 .pnp
 .pnp.js
+.yalc
 
 # webstorm
 .idea
