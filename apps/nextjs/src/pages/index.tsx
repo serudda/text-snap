@@ -1,16 +1,21 @@
-import { useState, type ReactElement } from 'react';
+import { useState, type ChangeEvent, type ReactElement } from 'react';
 import { api, Format } from '~/utils/api';
+import { useHotkeySettings } from '~/common';
 import { type NextPageWithLayout } from './_app';
 import { RootLayout } from '~layout';
+import { useHotkeys } from 'react-hotkeys-hook';
 import { Resize, Textarea } from 'side-ui';
 
 const Home: NextPageWithLayout = () => {
-  const [text, setText] = useState('Holla zoy Cerudda... quiero darte un abraso, y mucho carino');
+  const [text, setText] = useState('');
+  const { shortcuts } = useHotkeySettings();
+  const [selectedFormat, setSelectedFormat] = useState(Format.grammar);
+
   const { refetch: dispatchFormat, isFetching } = api.ai.dispatchFormat.useQuery(
     {
       text,
       selectedFormat: {
-        type: Format.grammar,
+        type: selectedFormat,
       },
     },
     {
@@ -26,7 +31,12 @@ const Home: NextPageWithLayout = () => {
     },
   );
 
-  const handleTextChange = async () => {
+  const handleTextChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    setText(event.target.value);
+  };
+
+  const handleHotKey = async (formatType: Format) => {
+    setSelectedFormat(formatType);
     const response = await dispatchFormat();
 
     if (!response.data?.data) {
@@ -34,9 +44,38 @@ const Home: NextPageWithLayout = () => {
       return;
     }
 
-    const formattedText = response.data.data.formattedText;
-    setText(formattedText);
+    setText(response.data.data.formattedText);
   };
+
+  useHotkeys(shortcuts.translate, (event) => {
+    event.preventDefault();
+    void handleHotKey(Format.translate);
+  });
+
+  useHotkeys(shortcuts.grammar, (event) => {
+    event.preventDefault();
+    void handleHotKey(Format.grammar);
+  });
+
+  useHotkeys(shortcuts.condense, (event) => {
+    event.preventDefault();
+    void handleHotKey(Format.condense);
+  });
+
+  useHotkeys(shortcuts.formality, (event) => {
+    event.preventDefault();
+    void handleHotKey(Format.formality);
+  });
+
+  useHotkeys(shortcuts.emoji, (event) => {
+    event.preventDefault();
+    void handleHotKey(Format.emoji);
+  });
+
+  useHotkeys(shortcuts.improve, (event) => {
+    event.preventDefault();
+    void handleHotKey(Format.improve);
+  });
 
   return (
     <main>
