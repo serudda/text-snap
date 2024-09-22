@@ -1,4 +1,4 @@
-import { grammarHandler as grammarAIHandler } from '@acme/ai';
+import { grammarHandler as grammarAIHandler, improveHandler as improveAIHandler } from '@acme/ai';
 import { ChangeScale, EmojiPosition, FormalityScale, Format, Response, TRPCErrorCode, type Params } from '../common';
 import type {
   CondenseInputType,
@@ -193,7 +193,7 @@ export const improveHandler = async ({ input }: Params<ImproveInputType>) => {
 
     console.log('text - (improve)', text);
 
-    const response = await grammarAIHandler(text);
+    const response = await improveAIHandler(text);
 
     console.log('response - (improve)', response);
     const result = (await response.json()) as string;
