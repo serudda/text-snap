@@ -22,16 +22,13 @@ export const useHotkeySettings = () => {
     if (typeof window !== 'undefined') {
       const savedShortcuts = localStorage.getItem('shortcuts');
 
-      if (savedShortcuts) {
-        setShortcuts(JSON.parse(savedShortcuts) as ShortcutType);
-      }
+      if (savedShortcuts) setShortcuts(JSON.parse(savedShortcuts) as ShortcutType);
     }
   }, []);
 
   useEffect(() => {
-    if (isClient) {
-      localStorage.setItem('shortcuts', JSON.stringify(shortcuts));
-    }
+    if (!isClient) return;
+    localStorage.setItem('shortcuts', JSON.stringify(shortcuts));
   }, [shortcuts, isClient]);
 
   const handleShortcutChange = (key: keyof ShortcutType, newShortcut: string) => {

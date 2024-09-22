@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { SINGLE_ALPHANUMERIC_CHAR_REGEX } from '~/common';
 
 /**
  * The `useRecordHotkeys` function in TypeScript allows for
@@ -14,6 +15,7 @@ import { useCallback, useEffect, useState } from 'react';
  *   - `stop`: a function to stop recording hotkeys (sets
  *       `isRecording` to false)
  */
+
 export const useRecordHotkeys = () => {
   const [keys, setKeys] = useState<Set<string>>(new Set());
   const [isRecording, setIsRecording] = useState(false);
@@ -29,7 +31,7 @@ export const useRecordHotkeys = () => {
       if (altKey) newKeys.add('Alt');
       if (shiftKey) newKeys.add('Shift');
 
-      if (/^[a-zA-Z0-9]$/.test(key)) {
+      if (SINGLE_ALPHANUMERIC_CHAR_REGEX.test(key)) {
         newKeys.add(key);
       }
 
@@ -55,9 +57,7 @@ export const useRecordHotkeys = () => {
     setIsRecording(true);
   };
 
-  const stop = () => {
-    setIsRecording(false);
-  };
+  const stop = () => setIsRecording(false);
 
   return {
     keys,
