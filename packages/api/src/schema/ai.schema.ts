@@ -67,21 +67,18 @@ export type CondenseInputType = TypeOf<typeof condenseInput>;
 
 export const dispatchFormatInput = z.object({
   text: z.string(),
-  selectedFormat: z.array(
-    z.object({
-      type: z.nativeEnum(Format),
-      priority: z.number(),
-      config: z
-        .object({
-          language: z.string().optional(),
-          scale: z.nativeEnum(ChangeScale).optional(),
-          formalityScale: z.nativeEnum(FormalityScale).optional(),
-          position: z.string().optional(),
-          length: z.number().optional(),
-          tone: z.string().optional(),
-        })
-        .optional(),
-    }),
-  ),
+  selectedFormat: z.object({
+    type: z.nativeEnum(Format),
+    config: z
+      .object({
+        language: z.string().optional(),
+        scale: z.nativeEnum(ChangeScale).optional(),
+        formalityScale: z.nativeEnum(FormalityScale).optional(),
+        position: z.string().optional(),
+        length: z.number().optional(),
+        tone: z.string().optional(),
+      })
+      .optional(),
+  }),
 });
 export type DispatchFormatInputType = TypeOf<typeof dispatchFormatInput>;

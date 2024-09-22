@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
+import { grammarHandler as grammarAIHandler } from '@acme/ai';
 import { ChangeScale, EmojiPosition, FormalityScale, Format, Response, TRPCErrorCode, type Params } from '../common';
 import type {
   CondenseInputType,
@@ -17,92 +16,91 @@ export const dispatchFormatHandler = async ({ ctx, input }: Params<DispatchForma
   try {
     const { text, selectedFormat } = input;
 
-    const sortedFormat = selectedFormat.slice().sort((a, b) => a.priority - b.priority);
-
     let formattedText = text;
 
-    for (const format of sortedFormat) {
-      switch (format.type) {
-        case Format.grammar: {
-          const response = await grammarHandler({ ctx, input: { text: formattedText } });
-          formattedText = response?.data.result || formattedText;
-          break;
-        }
+    console.log('text:', text);
+    console.log('selectedFormat:', selectedFormat);
 
-        case Format.improve: {
-          const response = await improveHandler({
-            ctx,
-            input: {
-              text: formattedText,
-              config: {
-                scale: format.config?.scale || ChangeScale.subtle,
-              },
-            },
-          });
-          formattedText = response?.data.result || formattedText;
-          break;
-        }
-
-        case Format.formality: {
-          const response = await formalityHandler({
-            ctx,
-            input: {
-              text: formattedText,
-              config: {
-                formalityScale: format.config?.formalityScale || FormalityScale.formal,
-              },
-            },
-          });
-          formattedText = response?.data.result || formattedText;
-          break;
-        }
-
-        case Format.translate: {
-          const response = await translateHandler({
-            ctx,
-            input: {
-              text: formattedText,
-              config: {
-                language: format.config?.language || 'English',
-              },
-            },
-          });
-          formattedText = response?.data.result || formattedText;
-          break;
-        }
-
-        case Format.emoji: {
-          const response = await emojiHandler({
-            ctx,
-            input: {
-              text: formattedText,
-              config: {
-                position: format.config?.position || EmojiPosition.randomly,
-                scale: format.config?.scale || ChangeScale.subtle,
-              },
-            },
-          });
-          formattedText = response?.data.result || formattedText;
-          break;
-        }
-
-        case Format.condense: {
-          const response = await condenseHandler({
-            ctx,
-            input: {
-              text: formattedText,
-              config: {
-                length: format.config?.length || 280,
-              },
-            },
-          });
-          formattedText = response?.data.result || formattedText;
-          break;
-        }
-
-        default:
-          break;
+    switch (selectedFormat.type) {
+      case Format.grammar: {
+        const response = await grammarHandler({ ctx, input: { text: formattedText } });
+        formattedText = response?.data.result || formattedText;
+        break;
       }
+
+      case Format.improve: {
+        const response = await improveHandler({
+          ctx,
+          input: {
+            text: formattedText,
+            config: {
+              scale: selectedFormat.config?.scale || ChangeScale.subtle,
+            },
+          },
+        });
+        formattedText = response?.data.result || formattedText;
+        break;
+      }
+
+      case Format.formality: {
+        const response = await formalityHandler({
+          ctx,
+          input: {
+            text: formattedText,
+            config: {
+              formalityScale: selectedFormat.config?.formalityScale || FormalityScale.formal,
+            },
+          },
+        });
+        formattedText = response?.data.result || formattedText;
+        break;
+      }
+
+      case Format.translate: {
+        const response = await translateHandler({
+          ctx,
+          input: {
+            text: formattedText,
+            config: {
+              language: selectedFormat.config?.language || 'English',
+            },
+          },
+        });
+        formattedText = response?.data.result || formattedText;
+        break;
+      }
+
+      case Format.emoji: {
+        const response = await emojiHandler({
+          ctx,
+          input: {
+            text: formattedText,
+            config: {
+              position: selectedFormat.config?.position || EmojiPosition.randomly,
+              scale: selectedFormat.config?.scale || ChangeScale.subtle,
+            },
+          },
+        });
+        formattedText = response?.data.result || formattedText;
+        break;
+      }
+
+      case Format.condense: {
+        const response = await condenseHandler({
+          ctx,
+          input: {
+            text: formattedText,
+            config: {
+              length: selectedFormat.config?.length || 280,
+            },
+          },
+        });
+        formattedText = response?.data.result || formattedText;
+        break;
+      }
+
+      default:
+        break;
     }
 
     console.log('formattedText RESULT SERVER:', formattedText);
@@ -145,15 +143,9 @@ export const grammarHandler = async ({ ctx, input }: Params<GrammarInputType>) =
   try {
     const { text } = input;
 
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    headers.append('Authorization', `Bearer ${process.env.SUPABASE_PROJECT_ANON_KEY as string}`);
+    console.log('text - (grammar)', text);
 
-    const response = await fetch(`${process.env.SUPABASE_EDGE_FUNCTIONS_URL}/grammar`, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({ text }),
-    });
+    const response = await grammarAIHandler(text);
 
     console.log('response - (grammar)', response);
     const result = (await response.json()) as string;

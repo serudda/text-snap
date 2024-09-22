@@ -1,12 +1,44 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
+import { useState } from 'react';
+import { api, Format } from '~/utils/api';
 import { Icon, IconCatalog } from '~/components';
-import { signIn, useSession } from 'next-auth/react';
 import { Button, ButtonSize, ButtonVariant } from 'side-ui';
 
 const Home: NextPage = () => {
-  const { data: sessionData } = useSession();
+  const [text, setText] = useState('Holla zoy Cerudda... quiero darte un abraso, y mucho carino');
+  const { refetch: dispatchFormat, isFetching } = api.ai.dispatchFormat.useQuery(
+    {
+      text,
+      selectedFormat: {
+        type: Format.grammar,
+      },
+    },
+    {
+      enabled: false,
+      retry: false,
+      cacheTime: 0,
+      onSuccess() {
+        console.log('dispatchFormat - onSuccess');
+      },
+      onError(error) {
+        console.error('dispatchFormat - onError', error);
+      },
+    },
+  );
+
+  const handleClick = async () => {
+    const response = await dispatchFormat();
+
+    if (!response.data?.data) {
+      console.error('Error fetching data');
+      return;
+    }
+
+    const formattedText = response.data.data.formattedText;
+    setText(formattedText);
+  };
 
   return (
     <>
@@ -16,23 +48,11 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="relative flex h-screen w-full flex-none flex-col items-center justify-center gap-10 overflow-hidden bg-slate-900 p-10">
-        <div className="relative flex h-min w-min flex-none flex-col flex-wrap items-center justify-center gap-4 overflow-hidden p-0">
-          <div className="mb-2 flex flex-row items-center gap-4 text-white">
-            <a className="text-2xl font-semibold text-secondary-300 transition hover:opacity-80" href="/">
-              Side Project Starter Kit
-            </a>
-          </div>
-          <div className="mb-4 w-96">
-            <h1 className="text-center text-3xl font-bold text-slate-50">This is a starter kit template</h1>
-          </div>
-          {sessionData ? (
-            <p className="text-lg text-white">{sessionData.user.name}</p>
-          ) : (
-            <Button variant={ButtonVariant.secondary} size={ButtonSize.sm} onClick={() => void signIn('twitter')}>
-              Log in with Twitter
-            </Button>
-          )}
-        </div>
+        {isFetching && <span className="animate-pulse text-primary-200">formateando...</span>}
+        <span className="text-white">{text}</span>
+        <Button variant={ButtonVariant.secondary} size={ButtonSize.sm} onClick={handleClick}>
+          Formatear
+        </Button>
 
         {/* Footer options */}
         <div className="flex flex-wrap justify-center gap-x-1 gap-y-3 sm:gap-x-2 lg:justify-start">
