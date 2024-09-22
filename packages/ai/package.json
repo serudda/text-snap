@@ -1,5 +1,5 @@
 {
-  "name": "@acme/api",
+  "name": "@acme/ai",
   "version": "0.1.0",
   "main": "./index.ts",
   "types": "./index.ts",
@@ -12,13 +12,10 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@acme/ai": "workspace:*",
-    "@acme/auth": "workspace:*",
-    "@acme/db": "workspace:*",
-    "@trpc/client": "^10.20.0",
-    "@trpc/server": "^10.20.0",
-    "superjson": "2.2.1",
-    "zod": "^3.23.8"
+    "@langchain/core": "^0.3.3",
+    "@langchain/openai": "^0.3.0",
+    "dedent": "^1.5.3",
+    "langchain": "^0.3.2"
   },
   "devDependencies": {
     "@acme/eslint-config": "workspace:*",

@@ -1,4 +1,5 @@
 import { accountRouter } from './router/account';
+import { aiRouter } from './router/ai';
 import { authRouter } from './router/auth';
 import { paymentRouter } from './router/payment';
 import { subscriptionRouter } from './router/subscription';
@@ -8,6 +9,7 @@ import { createTRPCRouter } from './trpc';
 
 export const appRouter = createTRPCRouter({
   account: accountRouter,
+  ai: aiRouter,
   auth: authRouter,
   payment: paymentRouter,
   subscription: subscriptionRouter,
