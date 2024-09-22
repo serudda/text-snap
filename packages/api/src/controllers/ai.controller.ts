@@ -1,5 +1,6 @@
 import {
   condenseHandler as condenseAIHandler,
+  emojiHandler as emojiAIHandler,
   grammarHandler as grammarAIHandler,
   improveHandler as improveAIHandler,
 } from '@acme/ai';
@@ -335,7 +336,7 @@ export const emojiHandler = async ({ input }: Params<EmojiInputType>) => {
 
     console.log('text - (emoji)', text);
 
-    const response = await grammarAIHandler(text);
+    const response = await emojiAIHandler(text);
 
     console.log('response - (emoji)', response);
     const result = (await response.json()) as string;
