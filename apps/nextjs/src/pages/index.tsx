@@ -298,7 +298,7 @@ const Home: NextPageWithLayout = () => {
             onClick={() => setIsOpen(true)}
             className="ml-auto flex items-center gap-3 rounded-md border border-neutral-800 px-3 py-2 text-sm text-neutral-300 transition-colors hover:bg-neutral-900/55 hover:text-white"
           >
-            <span>Commands</span>
+            <span>Formats</span>
             <div className="flex items-center gap-2">
               <kbd className="flex h-6 items-center rounded-md bg-neutral-900 p-2 text-xs">
                 {currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}
