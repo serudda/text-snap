@@ -10,6 +10,7 @@ import {
   Button,
   ButtonSize,
   ButtonVariant,
+  cn,
   ConfirmationModal,
   CopyButton,
   Icon,
@@ -17,6 +18,9 @@ import {
   IconStyle,
   Key,
   Resize,
+  Spinner,
+  SpinnerSize,
+  SpinnerVariant,
   Tag,
   TagVariant,
   Textarea,
@@ -50,7 +54,7 @@ const Home: NextPageWithLayout = () => {
 
   useEffect(() => {
     if (pressedControl || pressedCommand) {
-      if (textareaRef.current) textareaRef.current.blur();
+      // if (textareaRef.current) textareaRef.current.blur();
     }
   }, [pressedControl, pressedCommand]);
 
@@ -91,11 +95,19 @@ const Home: NextPageWithLayout = () => {
     },
   });
 
+  const classes = {
+    textarea: cn('rounded-lg border border-neutral-900 bg-neutral-950 px-6 py-5', {
+      'animate-pulse bg-neutral-900 text-neutral-700': isLoading,
+      'text-white': !isLoading,
+    }),
+  };
+
   const handleTextChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setTextareaValue(event.target.value);
   };
 
   const handleHotKey = (formatType: Format) => {
+    if (isLoading) return;
     dispatchFormat({
       text: textareaValue,
       selectedFormat: {
@@ -119,30 +131,60 @@ const Home: NextPageWithLayout = () => {
     void handleHotKey(Format.translate);
   });
 
-  useHotkeys(shortcuts.grammar, (event) => {
-    event.preventDefault();
-    void handleHotKey(Format.grammar);
-  });
+  useHotkeys(
+    shortcuts.grammar,
+    (event) => {
+      event.preventDefault();
+      void handleHotKey(Format.grammar);
+    },
+    {
+      enableOnFormTags: ['TEXTAREA'],
+    },
+  );
 
-  useHotkeys(shortcuts.condense, (event) => {
-    event.preventDefault();
-    void handleHotKey(Format.condense);
-  });
+  useHotkeys(
+    shortcuts.condense,
+    (event) => {
+      event.preventDefault();
+      void handleHotKey(Format.condense);
+    },
+    {
+      enableOnFormTags: ['TEXTAREA'],
+    },
+  );
 
-  useHotkeys(shortcuts.formality, (event) => {
-    event.preventDefault();
-    void handleHotKey(Format.formality);
-  });
+  useHotkeys(
+    shortcuts.formality,
+    (event) => {
+      event.preventDefault();
+      void handleHotKey(Format.formality);
+    },
+    {
+      enableOnFormTags: ['TEXTAREA'],
+    },
+  );
 
-  useHotkeys(shortcuts.emoji, (event) => {
-    event.preventDefault();
-    void handleHotKey(Format.emoji);
-  });
+  useHotkeys(
+    shortcuts.emoji,
+    (event) => {
+      event.preventDefault();
+      void handleHotKey(Format.emoji);
+    },
+    {
+      enableOnFormTags: ['TEXTAREA'],
+    },
+  );
 
-  useHotkeys(shortcuts.improve, (event) => {
-    event.preventDefault();
-    void handleHotKey(Format.improve);
-  });
+  useHotkeys(
+    shortcuts.improve,
+    (event) => {
+      event.preventDefault();
+      void handleHotKey(Format.improve);
+    },
+    {
+      enableOnFormTags: ['TEXTAREA'],
+    },
+  );
 
   const handleItemSelect = (itemId: Format) => {
     setIsOpen(false);
@@ -174,7 +216,6 @@ const Home: NextPageWithLayout = () => {
   return (
     <main>
       <div className="mx-auto max-w-4xl px-4 py-4 md:px-14">
-        {isLoading && <span className="animate-pulse text-primary-200">formateando...</span>}
         <div className="mb-3 flex w-full justify-between p-2">
           {textVersions.length > 0 && (
             <div className="flex items-center gap-1">
@@ -228,9 +269,10 @@ const Home: NextPageWithLayout = () => {
             </Button>
           </div>
         </div>
+
         <Textarea
           ref={textareaRef}
-          className="rounded-lg border border-neutral-900 bg-neutral-950 px-6 py-5 text-white"
+          className={classes.textarea}
           textareaClassName="placeholder:text-neutral-600"
           placeholder="Type or paste your text to format..."
           styleless
@@ -240,22 +282,29 @@ const Home: NextPageWithLayout = () => {
           value={textareaValue}
           onChange={handleTextChange}
         />
-        <div className="mt-4 flex items-center justify-between">
+
+        <div className="mt-2 flex items-center justify-between">
           {textVersions[currentVersionIndex]?.format && (
-            <div className="flex items-center gap-2 p-4">
+            <div className="flex items-center gap-2 p-2">
               <span className="text-sm text-neutral-500">Format applied:</span>
-              <Tag variant={TagVariant.success}>{textVersions[currentVersionIndex]?.format}</Tag>
+              {isLoading ? (
+                <Spinner variant={SpinnerVariant.primary} size={SpinnerSize.xs} />
+              ) : (
+                <Tag variant={TagVariant.success}>{textVersions[currentVersionIndex]?.format}</Tag>
+              )}
             </div>
           )}
           <button
             onClick={() => setIsOpen(true)}
-            className="ml-auto flex items-center gap-2 text-neutral-400 transition-colors hover:text-white"
+            className="ml-auto flex items-center gap-3 rounded-md px-3 py-2 text-sm text-neutral-300 transition-colors hover:bg-neutral-900/55 hover:text-white"
           >
-            Commands
-            <kbd className="flex h-6 items-center rounded-md bg-neutral-900 p-2 text-xs">
-              {currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}
-            </kbd>
-            <kbd className="flex aspect-square h-6 items-center rounded-md bg-neutral-900 p-2 text-xs">K</kbd>
+            <span>Commands</span>
+            <div className="flex items-center gap-2">
+              <kbd className="flex h-6 items-center rounded-md bg-neutral-900 p-2 text-xs">
+                {currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}
+              </kbd>
+              <kbd className="flex aspect-square h-6 items-center rounded-md bg-neutral-900 p-2 text-xs">K</kbd>
+            </div>
           </button>
 
           <CommandMenu isOpen={isOpen} onChangeOpen={setIsOpen} onItemSelect={handleItemSelect} />
