@@ -21,7 +21,7 @@ import { createTRPCRouter, publicProcedure } from '../trpc';
 export const aiRouter = createTRPCRouter({
   dispatchFormat: publicProcedure
     .input(dispatchFormatInput)
-    .query(async ({ ctx, input }) => dispatchFormatHandler({ ctx, input })),
+    .mutation(async ({ ctx, input }) => dispatchFormatHandler({ ctx, input })),
 
   grammar: publicProcedure.input(grammarInput).query(async ({ ctx, input }) => grammarHandler({ ctx, input })),
 
