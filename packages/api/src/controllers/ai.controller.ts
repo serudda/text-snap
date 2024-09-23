@@ -120,6 +120,7 @@ export const dispatchFormatHandler = async ({ ctx, input }: Params<DispatchForma
       status: Response.SUCCESS,
       data: {
         formattedText,
+        format: selectedFormat.type,
       },
     };
   } catch (error: unknown) {

@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent, type ReactElement } from 'react';
+import { useEffect, useState, type ChangeEvent, type ReactElement } from 'react';
 import { api, Format } from '~/utils/api';
 import { useHotkeySettings } from '~/common';
 import { type NextPageWithLayout } from './_app';
@@ -17,16 +17,49 @@ import {
   Textarea,
 } from 'side-ui';
 
+type TextVersion = {
+  text: string;
+  format?: Format;
+};
+
 const Home: NextPageWithLayout = () => {
-  const [text, setText] = useState('');
+  const [textareaValue, setTextareaValue] = useState('');
   const { shortcuts } = useHotkeySettings();
+  const [textVersions, setTextVersions] = useState<Array<TextVersion>>([]);
+  const [currentVersion, setCurrentVersion] = useState<TextVersion>();
+  const currentVersionIndex = textVersions.findIndex((version) => version.text === currentVersion?.text);
+
+  useEffect(() => {
+    setTextareaValue(currentVersion?.text || '');
+  }, [currentVersion]);
 
   const { mutate: dispatchFormat, isLoading } = api.ai.dispatchFormat.useMutation({
     retry: false,
     cacheTime: 0,
     onSuccess(response) {
       if (!response?.data) return;
-      setText(response.data.formattedText);
+      if (textVersions.length === 0) {
+        setTextVersions((prev) => [
+          ...prev,
+          {
+            text: textareaValue,
+          },
+          {
+            text: response.data.formattedText,
+            format: response.data.format,
+          },
+        ]);
+      } else {
+        setTextVersions((prev) => [
+          ...prev,
+          {
+            text: response.data.formattedText,
+            format: response.data.format,
+          },
+        ]);
+      }
+
+      setCurrentVersion({ text: response.data.formattedText, format: response.data.format });
     },
     onError(error) {
       console.error('dispatchFormat - onError', error);
@@ -34,18 +67,27 @@ const Home: NextPageWithLayout = () => {
   });
 
   const handleTextChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    setText(event.target.value);
+    setTextareaValue(event.target.value);
   };
 
   const handleHotKey = (formatType: Format) => {
     dispatchFormat({
-      text,
+      text: textareaValue,
       selectedFormat: {
         type: formatType,
       },
     });
   };
 
+  const handlePrevVersionClick = () => {
+    if (currentVersionIndex === -1 || currentVersionIndex === 0) return;
+    setCurrentVersion(textVersions[currentVersionIndex - 1]);
+  };
+
+  const handleNextVersionClick = () => {
+    if (currentVersionIndex === -1) return;
+    setCurrentVersion(textVersions[currentVersionIndex + 1]);
+  };
   useHotkeys(shortcuts.translate, (event) => {
     event.preventDefault();
     void handleHotKey(Format.translate);
@@ -81,15 +123,28 @@ const Home: NextPageWithLayout = () => {
       <div className="mx-auto max-w-4xl p-4 px-11">
         {isLoading && <span className="animate-pulse text-primary-200">formateando...</span>}
         <div className="mb-3 flex w-full justify-between border-b border-neutral-900 px-2 pb-4">
-          <div className="flex hidden items-center gap-1">
-            <Button variant={ButtonVariant.ghost} size={ButtonSize.xs}>
-              <Icon icon={IconCatalog.chevronRight} iconStyle={IconStyle.regular} className="h-4 w-4 rotate-180" />
-            </Button>
-            <span className="text-white">3/3</span>
-            <Button variant={ButtonVariant.ghost} size={ButtonSize.xs}>
-              <Icon icon={IconCatalog.chevronRight} iconStyle={IconStyle.regular} className="h-4 w-4" />
-            </Button>
-          </div>
+          {textVersions.length > 0 && (
+            <div className="flex items-center gap-1">
+              <Button
+                variant={ButtonVariant.ghost}
+                size={ButtonSize.xs}
+                onClick={handlePrevVersionClick}
+                isDisabled={currentVersionIndex === 0}
+              >
+                <Icon icon={IconCatalog.chevronRight} iconStyle={IconStyle.regular} className="h-4 w-4 rotate-180" />
+              </Button>
+              <span className="text-white">v{currentVersionIndex + 1}</span>
+              <Button
+                variant={ButtonVariant.ghost}
+                size={ButtonSize.xs}
+                onClick={handleNextVersionClick}
+                isDisabled={currentVersionIndex === textVersions.length - 1}
+              >
+                <Icon icon={IconCatalog.chevronRight} iconStyle={IconStyle.regular} className="h-4 w-4" />
+              </Button>
+            </div>
+          )}
+
           <div className="ml-auto flex items-center gap-3">
             <Button className="flex gap-2" variant={ButtonVariant.tertiary} size={ButtonSize.sm}>
               <Icon icon={IconCatalog.clipboard} iconStyle={IconStyle.regular} className="h-4 w-4" />
@@ -109,13 +164,15 @@ const Home: NextPageWithLayout = () => {
           hasAutoSize
           minHeight="30vh"
           resize={Resize.none}
-          value={text}
+          value={textareaValue}
           onChange={handleTextChange}
         />
-        <div className="flex hidden items-center gap-2 p-4">
-          <span className="text-sm text-neutral-500">Format applied:</span>
-          <Tag variant={TagVariant.success}>Emoji</Tag>
-        </div>
+        {textVersions[currentVersionIndex]?.format && (
+          <div className="flex items-center gap-2 p-4">
+            <span className="text-sm text-neutral-500">Format applied:</span>
+            <Tag variant={TagVariant.success}>{textVersions[currentVersionIndex]?.format}</Tag>
+          </div>
+        )}
       </div>
     </main>
   );
