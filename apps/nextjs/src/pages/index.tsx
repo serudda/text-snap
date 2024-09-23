@@ -1,6 +1,6 @@
 import { useEffect, useState, type ChangeEvent, type ReactElement } from 'react';
 import { api, Format } from '~/utils/api';
-import { useHotkeySettings } from '~/common';
+import { GetUserOperatingSystem, OperatingSystem, useHotkeySettings } from '~/common';
 import { CommandMenu } from '~/components';
 import { type NextPageWithLayout } from './_app';
 import { RootLayout } from '~layout';
@@ -30,7 +30,9 @@ const Home: NextPageWithLayout = () => {
   const [textVersions, setTextVersions] = useState<Array<TextVersion>>([]);
   const [currentVersion, setCurrentVersion] = useState<TextVersion>();
   const { shortcuts } = useHotkeySettings();
+
   const currentVersionIndex = textVersions.findIndex((version) => version.text === currentVersion?.text);
+  const currentOs = GetUserOperatingSystem();
 
   useHandleOpenCommandPalette(setIsOpen);
 
@@ -201,7 +203,9 @@ const Home: NextPageWithLayout = () => {
             className="ml-auto flex items-center gap-2 text-neutral-500 transition-colors hover:text-white"
           >
             Commands
-            <kbd className="flex aspect-square items-center rounded-md bg-neutral-900 p-2 text-xs">⌘</kbd>
+            <kbd className="flex items-center rounded-md bg-neutral-900 p-2 text-xs">
+              {currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}
+            </kbd>
             <kbd className="flex aspect-square items-center rounded-md bg-neutral-900 p-2 text-xs">K</kbd>
           </button>
 

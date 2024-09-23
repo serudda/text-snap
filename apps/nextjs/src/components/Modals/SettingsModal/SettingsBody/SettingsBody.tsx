@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { DEFAULT_SHORTCUTS, useHotkeySettings, useRecordHotkeys } from '~/common';
+import { getDefaultShortcuts, GetUserOperatingSystem, useHotkeySettings, useRecordHotkeys } from '~/common';
 import { Button, ButtonSize, cn } from 'side-ui';
 
 export interface SettingsBodyProps {
@@ -27,6 +27,7 @@ export const SettingsBody = ({ className }: SettingsBodyProps) => {
     shortcutText: cn('min-w-28 text-xl font-semibold'),
   };
 
+  const currentOs = GetUserOperatingSystem();
   const [currentKey, setCurrentKey] = useState<SettingsKey | null>(null);
   const { shortcuts, handleShortcutChange, resetShortcuts } = useHotkeySettings();
   const { keys, isRecording, start, stop } = useRecordHotkeys();
@@ -63,7 +64,7 @@ export const SettingsBody = ({ className }: SettingsBodyProps) => {
           <div className="flex select-none items-center gap-4">
             <p
               className={cn('uppercase text-white', {
-                'text-neutral-400': shortcuts[key] === DEFAULT_SHORTCUTS[key],
+                'text-neutral-400': shortcuts[key] === getDefaultShortcuts(currentOs)[key],
               })}
             >
               {shortcuts[key]}
