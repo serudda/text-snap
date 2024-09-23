@@ -216,7 +216,7 @@ const Home: NextPageWithLayout = () => {
   return (
     <main>
       <div className="mx-auto max-w-4xl px-4 py-4 md:px-14">
-        <div className="mb-3 flex w-full justify-between p-2">
+        <div className="mb-3 flex w-full justify-between">
           {textVersions.length > 0 && (
             <div className="flex items-center gap-1">
               <Button
@@ -283,7 +283,7 @@ const Home: NextPageWithLayout = () => {
           onChange={handleTextChange}
         />
 
-        <div className="mt-2 flex items-center justify-between">
+        <div className="mt-3 flex items-center justify-between">
           {textVersions[currentVersionIndex]?.format && (
             <div className="flex items-center gap-2 p-2">
               <span className="text-sm text-neutral-500">Format applied:</span>
@@ -296,7 +296,7 @@ const Home: NextPageWithLayout = () => {
           )}
           <button
             onClick={() => setIsOpen(true)}
-            className="ml-auto flex items-center gap-3 rounded-md px-3 py-2 text-sm text-neutral-300 transition-colors hover:bg-neutral-900/55 hover:text-white"
+            className="ml-auto flex items-center gap-3 rounded-md border border-neutral-800 px-3 py-2 text-sm text-neutral-300 transition-colors hover:bg-neutral-900/55 hover:text-white"
           >
             <span>Commands</span>
             <div className="flex items-center gap-2">
