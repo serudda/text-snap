@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { DEFAULT_SHORTCUTS, type ShortcutType } from '~/common/constants';
+import { getDefaultShortcuts, GetUserOperatingSystem, type ShortcutType } from '~/common';
 
 /**
  * The `useHotkeySettings` function manages user-defined
@@ -14,7 +14,8 @@ import { DEFAULT_SHORTCUTS, type ShortcutType } from '~/common/constants';
  *   shortcuts to default values.
  */
 export const useHotkeySettings = () => {
-  const [shortcuts, setShortcuts] = useState<ShortcutType>(DEFAULT_SHORTCUTS);
+  const currentOs = GetUserOperatingSystem();
+  const [shortcuts, setShortcuts] = useState<ShortcutType>(getDefaultShortcuts(currentOs));
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -39,8 +40,8 @@ export const useHotkeySettings = () => {
   };
 
   const resetShortcuts = () => {
-    setShortcuts(DEFAULT_SHORTCUTS);
-    localStorage.setItem('shortcuts', JSON.stringify(DEFAULT_SHORTCUTS));
+    setShortcuts(getDefaultShortcuts(currentOs));
+    localStorage.setItem('shortcuts', JSON.stringify(getDefaultShortcuts(currentOs)));
   };
   return {
     shortcuts,
