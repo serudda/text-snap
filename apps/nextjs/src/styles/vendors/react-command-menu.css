@@ -599,7 +599,7 @@
   transition-duration: 200ms;
 }
 .command-palette .duration-200 {
-  transition-duration: 200ms;
+  transition-duration: 100ms;
 }
 .command-palette .ease-out {
   transition:
@@ -607,9 +607,7 @@
     transform 200ms cubic-bezier(0.5, 1.25, 0.75, 1.25);
 }
 .command-palette .ease-in {
-  transition:
-    opacity 200ms ease-in-out,
-    transform 200ms cubic-bezier(0.5, -0.75, 0.75, 1);
+  transition-timing-function: ease-in-out;
 }
 .command-palette .hover\:bg-gray-100:hover {
   --tw-bg-opacity: 1;
