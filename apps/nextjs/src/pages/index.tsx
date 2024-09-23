@@ -162,7 +162,7 @@ const Home: NextPageWithLayout = () => {
 
   return (
     <main>
-      <div className="mx-auto max-w-4xl px-14 py-4">
+      <div className="mx-auto max-w-4xl px-4 py-4 md:px-14">
         {isLoading && <span className="animate-pulse text-primary-200">formateando...</span>}
         <div className="mb-3 flex w-full justify-between p-2">
           {textVersions.length > 0 && (
@@ -220,7 +220,7 @@ const Home: NextPageWithLayout = () => {
         <Textarea
           className="rounded-lg border border-neutral-900 bg-neutral-950 p-4 text-white"
           textareaClassName="placeholder:text-neutral-600"
-          placeholder="Start your journey..."
+          placeholder="Type or paste your text to format..."
           styleless
           hasAutoSize
           minHeight="30vh"
