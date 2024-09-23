@@ -1,4 +1,5 @@
 import { type ReactNode } from 'react';
+import { GetUserOperatingSystem } from '~/common';
 
 export interface RootLayoutProps {
   /**
@@ -8,13 +9,17 @@ export interface RootLayoutProps {
 }
 
 export const RootLayout = ({ children }: RootLayoutProps) => {
+  const currentOs = GetUserOperatingSystem();
+
   return (
     <div className="grid h-dvh grid-rows-[1fr,auto] bg-neutral-950">
       {children}
       <footer className="grid place-items-center gap-4">
         <div className="flex select-none items-center gap-2 text-neutral-500">
           The best version of your words
-          <kbd className="flex aspect-square items-center rounded-md bg-neutral-900 p-2 text-xs">⌘</kbd>
+          <kbd className="flex items-center rounded-md bg-neutral-900 p-2 text-xs">
+            {currentOs === 'Windows' ? 'CTRL' : '⌘'}
+          </kbd>
           <kbd className="flex aspect-square items-center rounded-md bg-neutral-900 p-2 text-xs">K</kbd>
         </div>
         <p className="mb-6 text-center text-lg font-semibold text-neutral-200">
