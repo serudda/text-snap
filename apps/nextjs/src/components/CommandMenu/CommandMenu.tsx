@@ -43,7 +43,7 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
             id: Format.translate,
             children: (
               <div className="flex w-full items-center justify-between text-white">
-                <span>Translate</span>
+                <span>Translate to Spanish</span>
                 <div className={classes.shortcutContainer}>
                   <kbd className={classes.shortcut}>{currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}</kbd>
                   <kbd className={classes.shortcut}>ALT</kbd>
@@ -62,7 +62,7 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
             id: Format.grammar,
             children: (
               <div className="flex w-full items-center justify-between text-white">
-                <span>Grammar</span>
+                <span>Fix spelling & grammar</span>
                 <div className={classes.shortcutContainer}>
                   <kbd className={classes.shortcut}>{currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}</kbd>
                   <kbd className={classes.shortcut}>ALT</kbd>
@@ -81,7 +81,7 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
             id: Format.condense,
             children: (
               <div className="flex w-full items-center justify-between text-white">
-                <span>Condense</span>
+                <span>make the text shorter</span>
                 <div className={classes.shortcutContainer}>
                   <kbd className={classes.shortcut}>{currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}</kbd>
                   <kbd className={classes.shortcut}>ALT</kbd>
@@ -102,7 +102,7 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
               <div className="flex w-full items-center justify-between text-white">
                 <div className="flex w-full items-center space-x-2.5">
                   <Icon icon={IconCatalog.suitcase} className="h-5 w-5 text-gray-500" />
-                  <p className="dark:text-white">Formality</p>
+                  <p className="dark:text-white">Adjust the formality</p>
                 </div>
                 <div className={classes.shortcutContainer}>
                   <kbd className={classes.shortcut}>{currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}</kbd>
@@ -121,7 +121,7 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
             id: Format.emoji,
             children: (
               <div className="flex w-full items-center justify-between text-white">
-                <span>Emoji</span>
+                <span>Add emojis & symbols</span>
                 <div className={classes.shortcutContainer}>
                   <kbd className={classes.shortcut}>{currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}</kbd>
                   <kbd className={classes.shortcut}>ALT</kbd>
@@ -140,7 +140,7 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
             id: Format.improve,
             children: (
               <div className="flex w-full items-center justify-between text-white">
-                <span>Improve</span>
+                <span>Improve writing</span>
                 <div className={classes.shortcutContainer}>
                   <kbd className={classes.shortcut}>{currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}</kbd>
                   <kbd className={classes.shortcut}>ALT</kbd>
