@@ -218,7 +218,7 @@ const Home: NextPageWithLayout = () => {
           </div>
         </div>
         <Textarea
-          className="rounded-lg border border-neutral-900 bg-neutral-950 p-4 text-white"
+          className="rounded-lg border border-neutral-900 bg-neutral-950 px-6 py-5 text-white"
           textareaClassName="placeholder:text-neutral-600"
           placeholder="Type or paste your text to format..."
           styleless
@@ -240,10 +240,10 @@ const Home: NextPageWithLayout = () => {
             className="ml-auto flex items-center gap-2 text-neutral-400 transition-colors hover:text-white"
           >
             Commands
-            <kbd className="flex items-center rounded-md bg-neutral-900 p-2 text-xs">
+            <kbd className="flex h-6 items-center rounded-md bg-neutral-900 p-2 text-xs">
               {currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}
             </kbd>
-            <kbd className="flex aspect-square items-center rounded-md bg-neutral-900 p-2 text-xs">K</kbd>
+            <kbd className="flex aspect-square h-6 items-center rounded-md bg-neutral-900 p-2 text-xs">K</kbd>
           </button>
 
           <CommandMenu isOpen={isOpen} onChangeOpen={setIsOpen} onItemSelect={handleItemSelect} />

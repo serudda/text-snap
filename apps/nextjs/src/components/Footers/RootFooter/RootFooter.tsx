@@ -30,10 +30,10 @@ export const RootFooter = () => {
       <div className="flex select-none items-center gap-4 text-neutral-500">
         {randomPrompt}
         <div className="flex items-center gap-2">
-          <kbd className="flex items-center rounded-md bg-neutral-900 p-2 text-xs">
+          <kbd className="flex h-6 items-center rounded-md bg-neutral-900 p-2 text-xs">
             {currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}
           </kbd>
-          <kbd className="flex aspect-square items-center rounded-md bg-neutral-900 p-2 text-xs">K</kbd>
+          <kbd className="flex aspect-square h-6 items-center rounded-md bg-neutral-900 p-2 text-xs">K</kbd>
         </div>
       </div>
       <p className="mb-6 text-center text-base text-neutral-200">
