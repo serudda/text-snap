@@ -96,7 +96,7 @@ const Home: NextPageWithLayout = () => {
   });
 
   const classes = {
-    textarea: cn('rounded-lg border border-neutral-900 bg-neutral-950 px-6 py-5', {
+    textarea: cn('rounded-lg border border-neutral-800 bg-neutral-950 px-6 py-5', {
       'animate-pulse bg-neutral-900 text-neutral-700': isLoading,
       'text-white': !isLoading,
     }),
