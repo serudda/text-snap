@@ -10,6 +10,8 @@ import {
   Button,
   ButtonSize,
   ButtonVariant,
+  ConfirmationModal,
+  CopyButton,
   Icon,
   IconCatalog,
   IconStyle,
@@ -17,6 +19,7 @@ import {
   Tag,
   TagVariant,
   Textarea,
+  useModal,
 } from 'side-ui';
 
 type TextVersion = {
@@ -25,6 +28,7 @@ type TextVersion = {
 };
 
 const Home: NextPageWithLayout = () => {
+  const [mounted, setMounted] = useState(false);
   const [textareaValue, setTextareaValue] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [textVersions, setTextVersions] = useState<Array<TextVersion>>([]);
@@ -33,8 +37,11 @@ const Home: NextPageWithLayout = () => {
 
   const currentVersionIndex = textVersions.findIndex((version) => version.text === currentVersion?.text);
   const currentOs = GetUserOperatingSystem();
+  const { modalNode, openModal } = useModal();
 
   useHandleOpenCommandPalette(setIsOpen);
+
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     setTextareaValue(currentVersion?.text || '');
@@ -131,6 +138,28 @@ const Home: NextPageWithLayout = () => {
     void handleHotKey(itemId);
   };
 
+  const handleCleanClick = async () => {
+    await openModal<string | null>((close) => (
+      <ConfirmationModal
+        header={{
+          title: 'Clean Text',
+          hasCloseBtn: true,
+        }}
+        description="Are you sure you want to clean the text?"
+        confirmBtnLabel="Clean"
+        cancelBtnLabel="Cancel"
+        onClose={() => close(null)}
+        onConfirm={() => {
+          // Clean all states
+          setTextareaValue('');
+          setTextVersions([]);
+          setCurrentVersion(undefined);
+          close();
+        }}
+      />
+    ));
+  };
+
   return (
     <main>
       <div className="mx-auto max-w-4xl p-4 px-11">
@@ -162,18 +191,26 @@ const Home: NextPageWithLayout = () => {
           )}
 
           <div className="ml-auto flex items-center gap-3">
+            {mounted && (
+              <CopyButton target={textareaValue}>
+                <span>
+                  <Button
+                    className="flex gap-2 dark:border-neutral-800 dark:hover:bg-neutral-900"
+                    variant={ButtonVariant.tertiary}
+                    size={ButtonSize.sm}
+                  >
+                    <Icon icon={IconCatalog.clipboard} iconStyle={IconStyle.regular} className="h-4 w-4" />
+                    <span>Copy</span>
+                  </Button>
+                </span>
+              </CopyButton>
+            )}
+
             <Button
               className="flex gap-2 dark:border-neutral-800 dark:hover:bg-neutral-900"
               variant={ButtonVariant.tertiary}
               size={ButtonSize.sm}
-            >
-              <Icon icon={IconCatalog.clipboard} iconStyle={IconStyle.regular} className="h-4 w-4" />
-              <span>Copy</span>
-            </Button>
-            <Button
-              className="flex gap-2 dark:border-neutral-800 dark:hover:bg-neutral-900"
-              variant={ButtonVariant.tertiary}
-              size={ButtonSize.sm}
+              onClick={handleCleanClick}
             >
               <Icon icon={IconCatalog.trash} iconStyle={IconStyle.regular} className="h-4 w-4" />
               <span>Clean</span>
@@ -212,6 +249,7 @@ const Home: NextPageWithLayout = () => {
           <CommandMenu isOpen={isOpen} onChangeOpen={setIsOpen} onItemSelect={handleItemSelect} />
         </div>
       </div>
+      {modalNode}
     </main>
   );
 };
