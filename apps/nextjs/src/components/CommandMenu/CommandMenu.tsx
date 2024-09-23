@@ -46,6 +46,7 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
                 <span>Translate</span>
                 <div className={classes.shortcutContainer}>
                   <kbd className={classes.shortcut}>{currentOs === 'Windows' ? 'CTRL' : '⌘'}</kbd>
+                  <kbd className={classes.shortcut}>ALT</kbd>
                   <kbd className={classes.shortcut}>T</kbd>
                 </div>
               </div>
@@ -64,6 +65,7 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
                 <span>Grammar</span>
                 <div className={classes.shortcutContainer}>
                   <kbd className={classes.shortcut}>{currentOs === 'Windows' ? 'CTRL' : '⌘'}</kbd>
+                  <kbd className={classes.shortcut}>ALT</kbd>
                   <kbd className={classes.shortcut}>G</kbd>
                 </div>
               </div>
@@ -82,6 +84,7 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
                 <span>Condense</span>
                 <div className={classes.shortcutContainer}>
                   <kbd className={classes.shortcut}>{currentOs === 'Windows' ? 'CTRL' : '⌘'}</kbd>
+                  <kbd className={classes.shortcut}>ALT</kbd>
                   <kbd className={classes.shortcut}>C</kbd>
                 </div>
               </div>
@@ -103,6 +106,7 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
                 </div>
                 <div className={classes.shortcutContainer}>
                   <kbd className={classes.shortcut}>{currentOs === 'Windows' ? 'CTRL' : '⌘'}</kbd>
+                  <kbd className={classes.shortcut}>ALT</kbd>
                   <kbd className={classes.shortcut}>F</kbd>
                 </div>
               </div>
@@ -120,6 +124,7 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
                 <span>Emoji</span>
                 <div className={classes.shortcutContainer}>
                   <kbd className={classes.shortcut}>{currentOs === 'Windows' ? 'CTRL' : '⌘'}</kbd>
+                  <kbd className={classes.shortcut}>ALT</kbd>
                   <kbd className={classes.shortcut}>E</kbd>
                 </div>
               </div>
@@ -138,6 +143,7 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
                 <span>Improve</span>
                 <div className={classes.shortcutContainer}>
                   <kbd className={classes.shortcut}>{currentOs === 'Windows' ? 'CTRL' : '⌘'}</kbd>
+                  <kbd className={classes.shortcut}>ALT</kbd>
                   <kbd className={classes.shortcut}>I</kbd>
                 </div>
               </div>
