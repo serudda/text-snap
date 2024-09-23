@@ -1,8 +1,10 @@
 import { useEffect, useState, type ChangeEvent, type ReactElement } from 'react';
 import { api, Format } from '~/utils/api';
 import { useHotkeySettings } from '~/common';
+import { CommandMenu } from '~/components';
 import { type NextPageWithLayout } from './_app';
 import { RootLayout } from '~layout';
+import { useHandleOpenCommandPalette } from 'react-cmdk';
 import { useHotkeys } from 'react-hotkeys-hook';
 import {
   Button,
@@ -24,10 +26,13 @@ type TextVersion = {
 
 const Home: NextPageWithLayout = () => {
   const [textareaValue, setTextareaValue] = useState('');
-  const { shortcuts } = useHotkeySettings();
+  const [isOpen, setIsOpen] = useState(false);
   const [textVersions, setTextVersions] = useState<Array<TextVersion>>([]);
   const [currentVersion, setCurrentVersion] = useState<TextVersion>();
+  const { shortcuts } = useHotkeySettings();
   const currentVersionIndex = textVersions.findIndex((version) => version.text === currentVersion?.text);
+
+  useHandleOpenCommandPalette(setIsOpen);
 
   useEffect(() => {
     setTextareaValue(currentVersion?.text || '');
@@ -88,6 +93,7 @@ const Home: NextPageWithLayout = () => {
     if (currentVersionIndex === -1) return;
     setCurrentVersion(textVersions[currentVersionIndex + 1]);
   };
+
   useHotkeys(shortcuts.translate, (event) => {
     event.preventDefault();
     void handleHotKey(Format.translate);
@@ -118,6 +124,11 @@ const Home: NextPageWithLayout = () => {
     void handleHotKey(Format.improve);
   });
 
+  const handleItemSelect = (itemId: Format) => {
+    setIsOpen(false);
+    void handleHotKey(itemId);
+  };
+
   return (
     <main>
       <div className="mx-auto max-w-4xl p-4 px-11">
@@ -126,6 +137,8 @@ const Home: NextPageWithLayout = () => {
           {textVersions.length > 0 && (
             <div className="flex items-center gap-1">
               <Button
+                className="dark:hover:bg-neutral-900"
+                invert
                 variant={ButtonVariant.ghost}
                 size={ButtonSize.xs}
                 onClick={handlePrevVersionClick}
@@ -133,8 +146,9 @@ const Home: NextPageWithLayout = () => {
               >
                 <Icon icon={IconCatalog.chevronRight} iconStyle={IconStyle.regular} className="h-4 w-4 rotate-180" />
               </Button>
-              <span className="text-white">v{currentVersionIndex + 1}</span>
+              <span className="select-none text-white">v{currentVersionIndex + 1}</span>
               <Button
+                className="dark:hover:bg-neutral-900"
                 variant={ButtonVariant.ghost}
                 size={ButtonSize.xs}
                 onClick={handleNextVersionClick}
@@ -146,11 +160,19 @@ const Home: NextPageWithLayout = () => {
           )}
 
           <div className="ml-auto flex items-center gap-3">
-            <Button className="flex gap-2" variant={ButtonVariant.tertiary} size={ButtonSize.sm}>
+            <Button
+              className="flex gap-2 dark:border-neutral-800 dark:hover:bg-neutral-900"
+              variant={ButtonVariant.tertiary}
+              size={ButtonSize.sm}
+            >
               <Icon icon={IconCatalog.clipboard} iconStyle={IconStyle.regular} className="h-4 w-4" />
               <span>Copy</span>
             </Button>
-            <Button className="flex gap-2" variant={ButtonVariant.tertiary} size={ButtonSize.sm}>
+            <Button
+              className="flex gap-2 dark:border-neutral-800 dark:hover:bg-neutral-900"
+              variant={ButtonVariant.tertiary}
+              size={ButtonSize.sm}
+            >
               <Icon icon={IconCatalog.trash} iconStyle={IconStyle.regular} className="h-4 w-4" />
               <span>Clean</span>
             </Button>
@@ -167,12 +189,24 @@ const Home: NextPageWithLayout = () => {
           value={textareaValue}
           onChange={handleTextChange}
         />
-        {textVersions[currentVersionIndex]?.format && (
-          <div className="flex items-center gap-2 p-4">
-            <span className="text-sm text-neutral-500">Format applied:</span>
-            <Tag variant={TagVariant.success}>{textVersions[currentVersionIndex]?.format}</Tag>
-          </div>
-        )}
+        <div className="mt-2 flex items-center justify-between">
+          {textVersions[currentVersionIndex]?.format && (
+            <div className="flex items-center gap-2 p-4">
+              <span className="text-sm text-neutral-500">Format applied:</span>
+              <Tag variant={TagVariant.success}>{textVersions[currentVersionIndex]?.format}</Tag>
+            </div>
+          )}
+          <button
+            onClick={() => setIsOpen(true)}
+            className="ml-auto flex items-center gap-2 text-neutral-500 transition-colors hover:text-white"
+          >
+            Commands
+            <kbd className="flex aspect-square items-center rounded-md bg-neutral-900 p-2 text-xs">⌘</kbd>
+            <kbd className="flex aspect-square items-center rounded-md bg-neutral-900 p-2 text-xs">K</kbd>
+          </button>
+
+          <CommandMenu isOpen={isOpen} onChangeOpen={setIsOpen} onItemSelect={handleItemSelect} />
+        </div>
       </div>
     </main>
   );
