@@ -162,9 +162,9 @@ const Home: NextPageWithLayout = () => {
 
   return (
     <main>
-      <div className="mx-auto max-w-4xl p-4 px-11">
+      <div className="mx-auto max-w-4xl px-14 py-4">
         {isLoading && <span className="animate-pulse text-primary-200">formateando...</span>}
-        <div className="mb-3 flex w-full justify-between border-b border-neutral-900 px-2 pb-4">
+        <div className="mb-3 flex w-full justify-between p-2">
           {textVersions.length > 0 && (
             <div className="flex items-center gap-1">
               <Button
@@ -218,7 +218,7 @@ const Home: NextPageWithLayout = () => {
           </div>
         </div>
         <Textarea
-          className="border-b border-neutral-900 bg-neutral-950 p-4 text-white"
+          className="rounded-lg border border-neutral-900 bg-neutral-950 p-4 text-white"
           textareaClassName="placeholder:text-neutral-600"
           placeholder="Start your journey..."
           styleless
@@ -228,7 +228,7 @@ const Home: NextPageWithLayout = () => {
           value={textareaValue}
           onChange={handleTextChange}
         />
-        <div className="mt-2 flex items-center justify-between">
+        <div className="mt-4 flex items-center justify-between">
           {textVersions[currentVersionIndex]?.format && (
             <div className="flex items-center gap-2 p-4">
               <span className="text-sm text-neutral-500">Format applied:</span>
@@ -237,7 +237,7 @@ const Home: NextPageWithLayout = () => {
           )}
           <button
             onClick={() => setIsOpen(true)}
-            className="ml-auto flex items-center gap-2 text-neutral-500 transition-colors hover:text-white"
+            className="ml-auto flex items-center gap-2 text-neutral-400 transition-colors hover:text-white"
           >
             Commands
             <kbd className="flex items-center rounded-md bg-neutral-900 p-2 text-xs">

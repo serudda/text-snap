@@ -26,16 +26,18 @@ export const RootFooter = () => {
   }, []);
 
   return (
-    <footer className="grid place-items-center gap-4">
-      <div className="flex select-none items-center gap-2 text-neutral-500">
+    <footer className="grid place-items-center gap-6">
+      <div className="flex select-none items-center gap-4 text-neutral-500">
         {randomPrompt}
-        <kbd className="flex items-center rounded-md bg-neutral-900 p-2 text-xs">
-          {currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}
-        </kbd>
-        <kbd className="flex aspect-square items-center rounded-md bg-neutral-900 p-2 text-xs">K</kbd>
+        <div className="flex items-center gap-2">
+          <kbd className="flex items-center rounded-md bg-neutral-900 p-2 text-xs">
+            {currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}
+          </kbd>
+          <kbd className="flex aspect-square items-center rounded-md bg-neutral-900 p-2 text-xs">K</kbd>
+        </div>
       </div>
-      <p className="mb-6 text-center text-lg font-semibold text-neutral-200">
-        With 💘 from&nbsp;
+      <p className="mb-6 text-center text-base text-neutral-200">
+        With ❤️ from&nbsp;
         <a href="https://x.com/serudda" className="text-primary-300 transition-colors hover:text-primary-200">
           @serudda
         </a>
