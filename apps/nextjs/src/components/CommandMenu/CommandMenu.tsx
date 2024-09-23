@@ -81,7 +81,7 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
             id: Format.condense,
             children: (
               <div className="flex w-full items-center justify-between text-white">
-                <span>make the text shorter</span>
+                <span>Make the text shorter</span>
                 <div className={classes.shortcutContainer}>
                   <kbd className={classes.shortcut}>{currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}</kbd>
                   <kbd className={classes.shortcut}>ALT</kbd>
