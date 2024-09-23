@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { GetUserOperatingSystem } from '~/common';
+import { GetUserOperatingSystem, OperatingSystem } from '~/common';
 
 export const RootFooter = () => {
   const currentOs = GetUserOperatingSystem();
@@ -30,7 +30,7 @@ export const RootFooter = () => {
       <div className="flex select-none items-center gap-2 text-neutral-500">
         {randomPrompt}
         <kbd className="flex items-center rounded-md bg-neutral-900 p-2 text-xs">
-          {currentOs === 'Windows' ? 'CTRL' : '⌘'}
+          {currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}
         </kbd>
         <kbd className="flex aspect-square items-center rounded-md bg-neutral-900 p-2 text-xs">K</kbd>
       </div>

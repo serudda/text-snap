@@ -1,5 +1,7 @@
-export const getDefaultShortcuts = (os: 'Windows' | 'Mac' | 'Other') => {
-  const ctrlOrMeta = os === 'Mac' ? 'META' : os === 'Windows' ? 'CTRL' : 'CTRL';
+import { OperatingSystem } from '../constants';
+
+export const getDefaultShortcuts = (os: OperatingSystem) => {
+  const ctrlOrMeta = os === OperatingSystem.mac ? 'META' : os === OperatingSystem.windows ? 'CTRL' : 'CTRL';
 
   return {
     translate: `${ctrlOrMeta} + ALT + T`,

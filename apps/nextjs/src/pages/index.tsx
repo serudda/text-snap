@@ -1,6 +1,6 @@
 import { useEffect, useState, type ChangeEvent, type ReactElement } from 'react';
 import { api, Format } from '~/utils/api';
-import { GetUserOperatingSystem, useHotkeySettings } from '~/common';
+import { GetUserOperatingSystem, OperatingSystem, useHotkeySettings } from '~/common';
 import { CommandMenu } from '~/components';
 import { type NextPageWithLayout } from './_app';
 import { RootLayout } from '~layout';
@@ -204,7 +204,7 @@ const Home: NextPageWithLayout = () => {
           >
             Commands
             <kbd className="flex items-center rounded-md bg-neutral-900 p-2 text-xs">
-              {currentOs === 'Windows' ? 'CTRL' : '⌘'}
+              {currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}
             </kbd>
             <kbd className="flex aspect-square items-center rounded-md bg-neutral-900 p-2 text-xs">K</kbd>
           </button>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Format } from '@acme/ai';
-import { GetUserOperatingSystem } from '~/common';
+import { GetUserOperatingSystem, OperatingSystem } from '~/common';
 import CommandPalette, { filterItems, getItemIndex } from 'react-cmdk';
 import { cn, Icon, IconCatalog } from 'side-ui';
 
@@ -45,7 +45,7 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
               <div className="flex w-full items-center justify-between text-white">
                 <span>Translate</span>
                 <div className={classes.shortcutContainer}>
-                  <kbd className={classes.shortcut}>{currentOs === 'Windows' ? 'CTRL' : '⌘'}</kbd>
+                  <kbd className={classes.shortcut}>{currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}</kbd>
                   <kbd className={classes.shortcut}>ALT</kbd>
                   <kbd className={classes.shortcut}>T</kbd>
                 </div>
@@ -64,7 +64,7 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
               <div className="flex w-full items-center justify-between text-white">
                 <span>Grammar</span>
                 <div className={classes.shortcutContainer}>
-                  <kbd className={classes.shortcut}>{currentOs === 'Windows' ? 'CTRL' : '⌘'}</kbd>
+                  <kbd className={classes.shortcut}>{currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}</kbd>
                   <kbd className={classes.shortcut}>ALT</kbd>
                   <kbd className={classes.shortcut}>G</kbd>
                 </div>
@@ -83,7 +83,7 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
               <div className="flex w-full items-center justify-between text-white">
                 <span>Condense</span>
                 <div className={classes.shortcutContainer}>
-                  <kbd className={classes.shortcut}>{currentOs === 'Windows' ? 'CTRL' : '⌘'}</kbd>
+                  <kbd className={classes.shortcut}>{currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}</kbd>
                   <kbd className={classes.shortcut}>ALT</kbd>
                   <kbd className={classes.shortcut}>C</kbd>
                 </div>
@@ -105,7 +105,7 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
                   <p className="dark:text-white">Formality</p>
                 </div>
                 <div className={classes.shortcutContainer}>
-                  <kbd className={classes.shortcut}>{currentOs === 'Windows' ? 'CTRL' : '⌘'}</kbd>
+                  <kbd className={classes.shortcut}>{currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}</kbd>
                   <kbd className={classes.shortcut}>ALT</kbd>
                   <kbd className={classes.shortcut}>F</kbd>
                 </div>
@@ -123,7 +123,7 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
               <div className="flex w-full items-center justify-between text-white">
                 <span>Emoji</span>
                 <div className={classes.shortcutContainer}>
-                  <kbd className={classes.shortcut}>{currentOs === 'Windows' ? 'CTRL' : '⌘'}</kbd>
+                  <kbd className={classes.shortcut}>{currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}</kbd>
                   <kbd className={classes.shortcut}>ALT</kbd>
                   <kbd className={classes.shortcut}>E</kbd>
                 </div>
@@ -142,7 +142,7 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
               <div className="flex w-full items-center justify-between text-white">
                 <span>Improve</span>
                 <div className={classes.shortcutContainer}>
-                  <kbd className={classes.shortcut}>{currentOs === 'Windows' ? 'CTRL' : '⌘'}</kbd>
+                  <kbd className={classes.shortcut}>{currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}</kbd>
                   <kbd className={classes.shortcut}>ALT</kbd>
                   <kbd className={classes.shortcut}>I</kbd>
                 </div>

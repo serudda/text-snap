@@ -1,20 +1,21 @@
 import { useEffect, useState } from 'react';
+import { OperatingSystem } from '../constants';
 
 export const GetUserOperatingSystem = () => {
-  const [currentOS, setCurrentOS] = useState<'Mac' | 'Other' | 'Windows'>('Other');
+  const [currentOS, setCurrentOS] = useState<OperatingSystem>(OperatingSystem.other);
 
   useEffect(() => {
-    function getOS() {
+    const getOS = () => {
       const userAgent = navigator.userAgent.toLowerCase();
 
       if (userAgent.includes('win')) {
-        return 'Windows';
+        return OperatingSystem.windows;
       } else if (userAgent.includes('mac')) {
-        return 'Mac';
+        return OperatingSystem.mac;
       } else {
-        return 'Other';
+        return OperatingSystem.other;
       }
-    }
+    };
 
     setCurrentOS(getOS());
   }, []);
