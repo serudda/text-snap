@@ -1,4 +1,4 @@
-import { useEffect, useState, type ChangeEvent, type ReactElement } from 'react';
+import { useEffect, useRef, useState, type ChangeEvent, type ReactElement } from 'react';
 import { api, Format } from '~/utils/api';
 import { GetUserOperatingSystem, OperatingSystem, useHotkeySettings } from '~/common';
 import { CommandMenu } from '~/components';
@@ -15,10 +15,12 @@ import {
   Icon,
   IconCatalog,
   IconStyle,
+  Key,
   Resize,
   Tag,
   TagVariant,
   Textarea,
+  useKeyPress,
   useModal,
 } from 'side-ui';
 
@@ -34,6 +36,9 @@ const Home: NextPageWithLayout = () => {
   const [textVersions, setTextVersions] = useState<Array<TextVersion>>([]);
   const [currentVersion, setCurrentVersion] = useState<TextVersion>();
   const { shortcuts } = useHotkeySettings();
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const pressedControl = useKeyPress(Key.Control);
+  const pressedCommand = useKeyPress(Key.Meta);
 
   const currentVersionIndex = textVersions.findIndex((version) => version.text === currentVersion?.text);
   const currentOs = GetUserOperatingSystem();
@@ -42,6 +47,12 @@ const Home: NextPageWithLayout = () => {
   useHandleOpenCommandPalette(setIsOpen);
 
   useEffect(() => setMounted(true), []);
+
+  useEffect(() => {
+    if (pressedControl || pressedCommand) {
+      if (textareaRef.current) textareaRef.current.blur();
+    }
+  }, [pressedControl, pressedCommand]);
 
   useEffect(() => {
     setTextareaValue(currentVersion?.text || '');
@@ -218,6 +229,7 @@ const Home: NextPageWithLayout = () => {
           </div>
         </div>
         <Textarea
+          ref={textareaRef}
           className="rounded-lg border border-neutral-900 bg-neutral-950 px-6 py-5 text-white"
           textareaClassName="placeholder:text-neutral-600"
           placeholder="Type or paste your text to format..."
