@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Format } from '@acme/ai';
-import { GetUserOperatingSystem, OperatingSystem } from '~/common';
+import { getOS, OperatingSystem } from '~/common';
 import CommandPalette, { filterItems, getItemIndex } from 'react-cmdk';
 import { cn, Icon, IconCatalog } from 'side-ui';
 
@@ -23,7 +23,7 @@ interface CommandMenuProps {
 
 export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuProps) => {
   const [search, setSearch] = useState('');
-  const currentOs = GetUserOperatingSystem();
+  const currentOs = getOS(navigator.userAgent);
 
   const classes = {
     shortcutContainer: cn('flex items-center gap-2'),

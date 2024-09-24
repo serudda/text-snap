@@ -1,6 +1,7 @@
+import { type GetServerSideProps } from 'next';
 import { useEffect, useRef, useState, type ChangeEvent, type ReactElement } from 'react';
 import { api, Format } from '~/utils/api';
-import { GetUserOperatingSystem, OperatingSystem, useHotkeySettings } from '~/common';
+import { getDefaultShortcuts, getOS, OperatingSystem, usePreventHotKey } from '~/common';
 import { CommandMenu } from '~/components';
 import { type NextPageWithLayout } from './_app';
 import { RootLayout } from '~layout';
@@ -16,7 +17,6 @@ import {
   Icon,
   IconCatalog,
   IconStyle,
-  Key,
   Resize,
   Spinner,
   SpinnerSize,
@@ -24,7 +24,6 @@ import {
   Tag,
   TagVariant,
   Textarea,
-  useKeyPress,
   useModal,
 } from 'side-ui';
 
@@ -33,30 +32,24 @@ type TextVersion = {
   format?: Format;
 };
 
-const Home: NextPageWithLayout = () => {
-  const [mounted, setMounted] = useState(false);
+interface HomePageProps {
+  userAgent?: string;
+}
+
+const Home: NextPageWithLayout = ({ userAgent }: HomePageProps) => {
   const [textareaValue, setTextareaValue] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [textVersions, setTextVersions] = useState<Array<TextVersion>>([]);
   const [currentVersion, setCurrentVersion] = useState<TextVersion>();
-  const { shortcuts } = useHotkeySettings();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const pressedControl = useKeyPress(Key.Control);
-  const pressedCommand = useKeyPress(Key.Meta);
+  const currentOS = getOS(userAgent);
+  const shortcuts = getDefaultShortcuts(currentOS);
+  usePreventHotKey();
 
   const currentVersionIndex = textVersions.findIndex((version) => version.text === currentVersion?.text);
-  const currentOs = GetUserOperatingSystem();
   const { modalNode, openModal } = useModal();
 
   useHandleOpenCommandPalette(setIsOpen);
-
-  useEffect(() => setMounted(true), []);
-
-  useEffect(() => {
-    if (pressedControl || pressedCommand) {
-      // if (textareaRef.current) textareaRef.current.blur();
-    }
-  }, [pressedControl, pressedCommand]);
 
   useEffect(() => {
     setTextareaValue(currentVersion?.text || '');
@@ -126,10 +119,16 @@ const Home: NextPageWithLayout = () => {
     setCurrentVersion(textVersions[currentVersionIndex + 1]);
   };
 
-  useHotkeys(shortcuts.translate, (event) => {
-    event.preventDefault();
-    void handleHotKey(Format.translate);
-  });
+  useHotkeys(
+    shortcuts.translate,
+    (event) => {
+      event.preventDefault();
+      void handleHotKey(Format.translate);
+    },
+    {
+      enableOnFormTags: ['TEXTAREA'],
+    },
+  );
 
   useHotkeys(
     shortcuts.grammar,
@@ -243,20 +242,18 @@ const Home: NextPageWithLayout = () => {
           )}
 
           <div className="ml-auto flex items-center gap-3">
-            {mounted && (
-              <CopyButton target={textareaValue}>
-                <span>
-                  <Button
-                    className="flex gap-2 dark:border-neutral-800 dark:hover:bg-neutral-900"
-                    variant={ButtonVariant.tertiary}
-                    size={ButtonSize.sm}
-                  >
-                    <Icon icon={IconCatalog.clipboard} iconStyle={IconStyle.regular} className="h-4 w-4" />
-                    <span>Copy</span>
-                  </Button>
-                </span>
-              </CopyButton>
-            )}
+            <CopyButton target={textareaValue}>
+              <span>
+                <Button
+                  className="flex gap-2 dark:border-neutral-800 dark:hover:bg-neutral-900"
+                  variant={ButtonVariant.tertiary}
+                  size={ButtonSize.sm}
+                >
+                  <Icon icon={IconCatalog.clipboard} iconStyle={IconStyle.regular} className="h-4 w-4" />
+                  <span>Copy</span>
+                </Button>
+              </span>
+            </CopyButton>
 
             <Button
               className="flex gap-2 dark:border-neutral-800 dark:hover:bg-neutral-900"
@@ -301,7 +298,7 @@ const Home: NextPageWithLayout = () => {
             <span>Formats</span>
             <div className="flex items-center gap-2">
               <kbd className="flex h-6 items-center rounded-md bg-neutral-900 p-2 text-xs">
-                {currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}
+                {currentOS === OperatingSystem.windows ? 'CTRL' : '⌘'}
               </kbd>
               <kbd className="flex aspect-square h-6 items-center rounded-md bg-neutral-900 p-2 text-xs">K</kbd>
             </div>
@@ -316,4 +313,12 @@ const Home: NextPageWithLayout = () => {
 };
 
 Home.getLayout = (page: ReactElement) => <RootLayout>{page}</RootLayout>;
+
+export const getServerSideProps: GetServerSideProps<{ userAgent: string }> = async (context) => {
+  const userAgent = context.req.headers['user-agent'] as string;
+  return {
+    props: { userAgent },
+  };
+};
+
 export default Home;
