@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { Format } from '@acme/ai';
-import { getOS, OperatingSystem } from '~/common';
-import { languages, type LanguageValue } from '~/data';
+import { type DispatchFormatInputType } from '@acme/api/src/schema/ai.schema';
+import { getOS, LocalStorageKeys, OperatingSystem, translateConfig } from '~/common';
+import { languages } from '~/data';
 import CommandPalette, { filterItems, getItemIndex } from 'react-cmdk';
-import { cn, Icon, IconCatalog } from 'side-ui';
+import { cn, Icon, IconCatalog, useLocalStorage } from 'side-ui';
 
 enum CommandMenuPages {
-  commands = 'commands',
-  languages = 'languages',
+  mainMenu = 'maniManu',
+  languagesSubMenu = 'languagesSubMenu',
 }
 
 interface CommandMenuProps {
@@ -24,30 +25,23 @@ interface CommandMenuProps {
   /**
    * Callback when an item is selected.
    */
-  onItemSelect: (format: Format) => void;
-
-  /**
-   * The default language.
-   */
-  defaultLanguage: LanguageValue;
-
-  /**
-   * Callback to set the default language.
-   */
-  setDefaultLanguage: (language: LanguageValue) => void;
+  onItemSelect: (format: Format, config?: DispatchFormatInputType['selectedFormat']['config']) => void;
 }
 
-export const CommandMenu = ({
-  isOpen,
-  onChangeOpen,
-  onItemSelect,
-  defaultLanguage,
-  setDefaultLanguage,
-}: CommandMenuProps) => {
+export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuProps) => {
+  const [translateConfigLocalStorage, setTranslateConfigLocalStorage] = useLocalStorage(
+    LocalStorageKeys.translateConfig,
+    translateConfig,
+  );
   const [search, setSearch] = useState('');
-  const [page, setPage] = useState<CommandMenuPages>(CommandMenuPages.commands);
+  const [translateLanguage, setTranslateLanguage] = useState(translateConfigLocalStorage.language);
+  const [page, setPage] = useState<CommandMenuPages>(CommandMenuPages.mainMenu);
   const currentOs = getOS(navigator.userAgent);
-  const placeholder = page === CommandMenuPages.commands ? 'Search a Command' : 'Search a Language';
+
+  const placeholders: Record<CommandMenuPages, string> = {
+    [CommandMenuPages.mainMenu]: 'Search a Command',
+    [CommandMenuPages.languagesSubMenu]: 'Search a Language',
+  };
 
   const classes = {
     shortcutContainer: cn('flex items-center gap-2'),
@@ -60,7 +54,7 @@ export const CommandMenu = ({
     [
       {
         heading: 'Commands',
-        id: CommandMenuPages.commands,
+        id: CommandMenuPages.mainMenu,
         items: [
           {
             id: Format.translate,
@@ -79,7 +73,7 @@ export const CommandMenu = ({
             icon: 'GlobeAltIcon',
             closeOnSelect: false,
             onClick: () => {
-              setPage(CommandMenuPages.languages);
+              setPage(CommandMenuPages.languagesSubMenu);
             },
           },
           {
@@ -189,7 +183,7 @@ export const CommandMenu = ({
     [
       {
         heading: 'Select a Language',
-        id: CommandMenuPages.languages,
+        id: CommandMenuPages.languagesSubMenu,
         items: languages.map((language) => ({
           id: language.value,
           children: (
@@ -199,15 +193,18 @@ export const CommandMenu = ({
                 <span className="">{language.label}</span>
               </div>
 
-              {defaultLanguage === language.value && <div className={classes.shortcut}>default</div>}
+              {translateLanguage === language.value && <div className={classes.shortcut}>default</div>}
             </div>
           ),
           keywords: [language.label, language.value],
           showType: false,
 
           onClick: () => {
-            setDefaultLanguage(language.value);
-            setPage(CommandMenuPages.commands);
+            translateConfig.language = language.value;
+            setTranslateLanguage(language.value);
+            setTranslateConfigLocalStorage(translateConfig);
+            onItemSelect(Format.translate, translateConfig);
+            setPage(CommandMenuPages.mainMenu);
           },
         })),
       },
@@ -222,9 +219,9 @@ export const CommandMenu = ({
       search={search}
       isOpen={isOpen}
       page={page}
-      placeholder={placeholder}
+      placeholder={placeholders[page]}
     >
-      <CommandPalette.Page id={CommandMenuPages.commands}>
+      <CommandPalette.Page id={CommandMenuPages.mainMenu}>
         {commandsItems.map((list) => (
           <CommandPalette.List key={list.id} heading={list.heading}>
             {list.items.map(({ id, ...rest }) => (
@@ -235,9 +232,9 @@ export const CommandMenu = ({
       </CommandPalette.Page>
 
       <CommandPalette.Page
-        id={CommandMenuPages.languages}
+        id={CommandMenuPages.languagesSubMenu}
         searchPrefix={['Languages']}
-        onEscape={() => setPage(CommandMenuPages.commands)}
+        onEscape={() => setPage(CommandMenuPages.mainMenu)}
       >
         {languagesItems.map((list) => (
           <CommandPalette.List key={list.id} heading={list.heading}>
