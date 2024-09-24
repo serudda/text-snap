@@ -15,7 +15,7 @@ export const RootLayout = ({ children }: RootLayoutProps) => {
 
   if (!mounted) return null;
   return (
-    <div className="grid h-dvh grid-rows-[1fr,auto] bg-neutral-950">
+    <div className="grid min-h-dvh grid-rows-[1fr,auto] bg-neutral-950">
       {children}
 
       <RootFooter />
