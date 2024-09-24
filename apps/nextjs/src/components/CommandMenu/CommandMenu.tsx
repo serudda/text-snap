@@ -44,10 +44,8 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
   };
 
   const classes = {
-    shortcutContainer: cn('flex items-center gap-2'),
-    shortcut: cn(
-      'flex items-center rounded-md bg-neutral-950 p-2 text-xs transition-colors group-hover:bg-neutral-900',
-    ),
+    hotkeysContainer: cn('flex items-center gap-2'),
+    hotkeys: cn('flex items-center rounded-md bg-neutral-950 p-2 text-xs transition-colors group-hover:bg-neutral-900'),
   };
 
   const commandsItems = filterItems(
@@ -61,10 +59,10 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
             children: (
               <div className="flex w-full items-center justify-between text-white">
                 <span>Translate the text</span>
-                <div className={classes.shortcutContainer}>
-                  <kbd className={classes.shortcut}>{currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}</kbd>
-                  <kbd className={classes.shortcut}>ALT</kbd>
-                  <kbd className={classes.shortcut}>T</kbd>
+                <div className={classes.hotkeysContainer}>
+                  <kbd className={classes.hotkeys}>{currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}</kbd>
+                  <kbd className={classes.hotkeys}>ALT</kbd>
+                  <kbd className={classes.hotkeys}>T</kbd>
                 </div>
               </div>
             ),
@@ -81,10 +79,10 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
             children: (
               <div className="flex w-full items-center justify-between text-white">
                 <span>Fix spelling & grammar</span>
-                <div className={classes.shortcutContainer}>
-                  <kbd className={classes.shortcut}>{currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}</kbd>
-                  <kbd className={classes.shortcut}>ALT</kbd>
-                  <kbd className={classes.shortcut}>G</kbd>
+                <div className={classes.hotkeysContainer}>
+                  <kbd className={classes.hotkeys}>{currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}</kbd>
+                  <kbd className={classes.hotkeys}>ALT</kbd>
+                  <kbd className={classes.hotkeys}>G</kbd>
                 </div>
               </div>
             ),
@@ -100,10 +98,10 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
             children: (
               <div className="flex w-full items-center justify-between text-white">
                 <span>Make the text shorter</span>
-                <div className={classes.shortcutContainer}>
-                  <kbd className={classes.shortcut}>{currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}</kbd>
-                  <kbd className={classes.shortcut}>ALT</kbd>
-                  <kbd className={classes.shortcut}>C</kbd>
+                <div className={classes.hotkeysContainer}>
+                  <kbd className={classes.hotkeys}>{currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}</kbd>
+                  <kbd className={classes.hotkeys}>ALT</kbd>
+                  <kbd className={classes.hotkeys}>C</kbd>
                 </div>
               </div>
             ),
@@ -122,10 +120,10 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
                   <Icon icon={IconCatalog.suitcase} className="h-5 w-5 text-gray-500" />
                   <p className="dark:text-white">Adjust the formality</p>
                 </div>
-                <div className={classes.shortcutContainer}>
-                  <kbd className={classes.shortcut}>{currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}</kbd>
-                  <kbd className={classes.shortcut}>ALT</kbd>
-                  <kbd className={classes.shortcut}>F</kbd>
+                <div className={classes.hotkeysContainer}>
+                  <kbd className={classes.hotkeys}>{currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}</kbd>
+                  <kbd className={classes.hotkeys}>ALT</kbd>
+                  <kbd className={classes.hotkeys}>F</kbd>
                 </div>
               </div>
             ),
@@ -140,10 +138,10 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
             children: (
               <div className="flex w-full items-center justify-between text-white">
                 <span>Add emojis & symbols</span>
-                <div className={classes.shortcutContainer}>
-                  <kbd className={classes.shortcut}>{currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}</kbd>
-                  <kbd className={classes.shortcut}>ALT</kbd>
-                  <kbd className={classes.shortcut}>E</kbd>
+                <div className={classes.hotkeysContainer}>
+                  <kbd className={classes.hotkeys}>{currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}</kbd>
+                  <kbd className={classes.hotkeys}>ALT</kbd>
+                  <kbd className={classes.hotkeys}>E</kbd>
                 </div>
               </div>
             ),
@@ -159,10 +157,10 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
             children: (
               <div className="flex w-full items-center justify-between text-white">
                 <span>Improve writing</span>
-                <div className={classes.shortcutContainer}>
-                  <kbd className={classes.shortcut}>{currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}</kbd>
-                  <kbd className={classes.shortcut}>ALT</kbd>
-                  <kbd className={classes.shortcut}>I</kbd>
+                <div className={classes.hotkeysContainer}>
+                  <kbd className={classes.hotkeys}>{currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}</kbd>
+                  <kbd className={classes.hotkeys}>ALT</kbd>
+                  <kbd className={classes.hotkeys}>I</kbd>
                 </div>
               </div>
             ),
@@ -193,7 +191,7 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
                 <span className="">{language.label}</span>
               </div>
 
-              {translateLanguage === language.value && <div className={classes.shortcut}>default</div>}
+              {translateLanguage === language.value && <div className={classes.hotkeys}>default</div>}
             </div>
           ),
           keywords: [language.label, language.value],
