@@ -3,6 +3,7 @@ import { useEffect, useRef, useState, type ChangeEvent, type ReactElement } from
 import { api, Format } from '~/utils/api';
 import { getDefaultShortcuts, getOS, OperatingSystem, usePreventHotKey } from '~/common';
 import { CommandMenu } from '~/components';
+import { type LanguageValue } from '~/data';
 import { type NextPageWithLayout } from './_app';
 import { RootLayout } from '~layout';
 import { useHandleOpenCommandPalette } from 'react-cmdk';
@@ -41,14 +42,14 @@ const Home: NextPageWithLayout = ({ userAgent }: HomePageProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [textVersions, setTextVersions] = useState<Array<TextVersion>>([]);
   const [currentVersion, setCurrentVersion] = useState<TextVersion>();
+  const [defaultLanguage, setDefaultLanguage] = useState<LanguageValue>('English');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const currentOS = getOS(userAgent);
   const shortcuts = getDefaultShortcuts(currentOS);
-  usePreventHotKey();
-
   const currentVersionIndex = textVersions.findIndex((version) => version.text === currentVersion?.text);
   const { modalNode, openModal } = useModal();
 
+  usePreventHotKey();
   useHandleOpenCommandPalette(setIsOpen);
 
   useEffect(() => {
@@ -101,10 +102,12 @@ const Home: NextPageWithLayout = ({ userAgent }: HomePageProps) => {
 
   const handleHotKey = (formatType: Format) => {
     if (isLoading) return;
+
     dispatchFormat({
       text: textareaValue,
       selectedFormat: {
         type: formatType,
+        config: formatType === Format.translate ? { language: defaultLanguage } : undefined,
       },
     });
   };
@@ -304,7 +307,13 @@ const Home: NextPageWithLayout = ({ userAgent }: HomePageProps) => {
             </div>
           </button>
 
-          <CommandMenu isOpen={isOpen} onChangeOpen={setIsOpen} onItemSelect={handleItemSelect} />
+          <CommandMenu
+            isOpen={isOpen}
+            onChangeOpen={setIsOpen}
+            onItemSelect={handleItemSelect}
+            defaultLanguage={defaultLanguage}
+            setDefaultLanguage={setDefaultLanguage}
+          />
         </div>
       </div>
       {modalNode}
