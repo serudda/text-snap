@@ -60,7 +60,7 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
             id: Format.translate,
             children: (
               <div className="flex w-full items-center justify-between text-white">
-                <span>Select a default language for translation</span>
+                <span>Translate the text</span>
                 <div className={classes.shortcutContainer}>
                   <kbd className={classes.shortcut}>{currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}</kbd>
                   <kbd className={classes.shortcut}>ALT</kbd>
