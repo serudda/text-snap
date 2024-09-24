@@ -1,16 +1,23 @@
 import { OperatingSystem } from '../constants';
 
-export const getDefaultShortcuts = (os: OperatingSystem) => {
-  const ctrlOrMeta = os === OperatingSystem.mac ? 'META' : os === OperatingSystem.windows ? 'CTRL' : 'CTRL';
-
-  return {
-    translate: `${ctrlOrMeta} + ALT + T`,
-    grammar: `${ctrlOrMeta} + ALT + U`,
-    condense: `${ctrlOrMeta} + ALT + C`,
-    formality: `${ctrlOrMeta} + ALT + F`,
-    emoji: `${ctrlOrMeta} + ALT + E`,
-    improve: `${ctrlOrMeta} + ALT + I`,
-  };
+export type DefaultHotkeys = {
+  translate: string;
+  grammar: string;
+  condense: string;
+  formality: string;
+  emoji: string;
+  improve: string;
 };
 
-export type ShortcutType = ReturnType<typeof getDefaultShortcuts>;
+export const getDefaultShortcuts = (os: OperatingSystem): DefaultHotkeys => {
+  const ctrlOrMeta = os === OperatingSystem.mac ? 'meta' : os === OperatingSystem.windows ? 'ctrl' : 'ctrl';
+
+  return {
+    translate: `${ctrlOrMeta}+alt+t`,
+    grammar: `${ctrlOrMeta}+alt+g`,
+    condense: `${ctrlOrMeta}+alt+c`,
+    formality: `${ctrlOrMeta}+alt+f`,
+    emoji: `${ctrlOrMeta}+alt+e`,
+    improve: `${ctrlOrMeta}+alt+i`,
+  };
+};

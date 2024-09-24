@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { GetUserOperatingSystem, OperatingSystem } from '~/common';
+import { getOS, OperatingSystem } from '~/common';
 
 export const RootFooter = () => {
-  const currentOs = GetUserOperatingSystem();
+  const currentOs = getOS(navigator.userAgent);
 
   const prompts = [
     'Enhance your text instantly',

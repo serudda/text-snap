@@ -14,6 +14,7 @@ const config = {
     '@next/next/no-html-link-for-pages': 'off',
     '@typescript-eslint/restrict-template-expressions': 'off',
     '@typescript-eslint/no-var-requires': 'off',
+    '@typescript-eslint/require-await': 'warn',
     '@typescript-eslint/no-unsafe-member-access': 'warn',
     '@typescript-eslint/no-unsafe-call': 'warn',
     '@typescript-eslint/no-misused-promises': 'warn',

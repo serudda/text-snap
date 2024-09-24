@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { OperatingSystem } from '../constants';
 
-export const GetUserOperatingSystem = () => {
-  const [currentOS, setCurrentOS] = useState<OperatingSystem>(OperatingSystem.other);
+export const useDetectOS = () => {
+  const [currentOS, setCurrentOS] = useState<OperatingSystem>();
 
   useEffect(() => {
     const getOS = () => {
@@ -20,5 +20,5 @@ export const GetUserOperatingSystem = () => {
     setCurrentOS(getOS());
   }, []);
 
-  return currentOS;
+  return { currentOS };
 };
