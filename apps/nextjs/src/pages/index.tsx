@@ -1,9 +1,17 @@
 import { type GetServerSideProps } from 'next';
 import { useEffect, useRef, useState, type ChangeEvent, type ReactElement } from 'react';
+import { type DispatchFormatInputType } from '@acme/api/src/schema/ai.schema';
 import { api, Format } from '~/utils/api';
-import { getDefaultShortcuts, getOS, OperatingSystem, usePreventHotKey } from '~/common';
+import {
+  getDefaultShortcuts,
+  getOS,
+  LocalStorageKeys,
+  OperatingSystem,
+  translateConfig,
+  usePreventHotKey,
+} from '~/common';
 import { CommandMenu } from '~/components';
-import { type LanguageValue } from '~/data';
+import { languages } from '~/data';
 import { type NextPageWithLayout } from './_app';
 import { RootLayout } from '~layout';
 import { useHandleOpenCommandPalette } from 'react-cmdk';
@@ -25,6 +33,7 @@ import {
   Tag,
   TagVariant,
   Textarea,
+  useLocalStorage,
   useModal,
 } from 'side-ui';
 
@@ -42,7 +51,7 @@ const Home: NextPageWithLayout = ({ userAgent }: HomePageProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [textVersions, setTextVersions] = useState<Array<TextVersion>>([]);
   const [currentVersion, setCurrentVersion] = useState<TextVersion>();
-  const [defaultLanguage, setDefaultLanguage] = useState<LanguageValue>('English');
+  const [translateConfigLocalStorage] = useLocalStorage(LocalStorageKeys.translateConfig, translateConfig);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const currentOS = getOS(userAgent);
   const shortcuts = getDefaultShortcuts(currentOS);
@@ -100,14 +109,14 @@ const Home: NextPageWithLayout = ({ userAgent }: HomePageProps) => {
     setTextareaValue(event.target.value);
   };
 
-  const handleHotKey = (formatType: Format) => {
+  const handleHotKey = (formatType: Format, config?: DispatchFormatInputType['selectedFormat']['config']) => {
     if (isLoading) return;
 
     dispatchFormat({
       text: textareaValue,
       selectedFormat: {
         type: formatType,
-        config: formatType === Format.translate ? { language: defaultLanguage } : undefined,
+        config,
       },
     });
   };
@@ -124,9 +133,14 @@ const Home: NextPageWithLayout = ({ userAgent }: HomePageProps) => {
 
   useHotkeys(
     shortcuts.translate,
+
     (event) => {
+      const languageConfig = {
+        language: translateConfigLocalStorage?.language || languages[0].value,
+      };
+
       event.preventDefault();
-      void handleHotKey(Format.translate);
+      void handleHotKey(Format.translate, languageConfig);
     },
     {
       enableOnFormTags: ['TEXTAREA'],
@@ -188,9 +202,9 @@ const Home: NextPageWithLayout = ({ userAgent }: HomePageProps) => {
     },
   );
 
-  const handleItemSelect = (itemId: Format) => {
+  const handleItemSelect = (itemId: Format, config?: DispatchFormatInputType['selectedFormat']['config']) => {
     setIsOpen(false);
-    void handleHotKey(itemId);
+    void handleHotKey(itemId, config);
   };
 
   const handleCleanClick = async () => {
@@ -307,13 +321,7 @@ const Home: NextPageWithLayout = ({ userAgent }: HomePageProps) => {
             </div>
           </button>
 
-          <CommandMenu
-            isOpen={isOpen}
-            onChangeOpen={setIsOpen}
-            onItemSelect={handleItemSelect}
-            defaultLanguage={defaultLanguage}
-            setDefaultLanguage={setDefaultLanguage}
-          />
+          <CommandMenu isOpen={isOpen} onChangeOpen={setIsOpen} onItemSelect={handleItemSelect} />
         </div>
       </div>
       {modalNode}
