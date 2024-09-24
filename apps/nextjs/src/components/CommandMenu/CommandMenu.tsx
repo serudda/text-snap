@@ -1,8 +1,14 @@
 import { useState } from 'react';
 import { Format } from '@acme/ai';
 import { getOS, OperatingSystem } from '~/common';
+import { languages, type LanguageValue } from '~/data';
 import CommandPalette, { filterItems, getItemIndex } from 'react-cmdk';
 import { cn, Icon, IconCatalog } from 'side-ui';
+
+enum CommandMenuPages {
+  commands = 'commands',
+  languages = 'languages',
+}
 
 interface CommandMenuProps {
   /**
@@ -19,11 +25,29 @@ interface CommandMenuProps {
    * Callback when an item is selected.
    */
   onItemSelect: (format: Format) => void;
+
+  /**
+   * The default language.
+   */
+  defaultLanguage: LanguageValue;
+
+  /**
+   * Callback to set the default language.
+   */
+  setDefaultLanguage: (language: LanguageValue) => void;
 }
 
-export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuProps) => {
+export const CommandMenu = ({
+  isOpen,
+  onChangeOpen,
+  onItemSelect,
+  defaultLanguage,
+  setDefaultLanguage,
+}: CommandMenuProps) => {
   const [search, setSearch] = useState('');
+  const [page, setPage] = useState<CommandMenuPages>(CommandMenuPages.commands);
   const currentOs = getOS(navigator.userAgent);
+  const placeholder = page === CommandMenuPages.commands ? 'Search a Command' : 'Search a Language';
 
   const classes = {
     shortcutContainer: cn('flex items-center gap-2'),
@@ -32,18 +56,17 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
     ),
   };
 
-  const filteredItems = filterItems(
+  const commandsItems = filterItems(
     [
       {
         heading: 'Commands',
-        id: 'commands',
-
+        id: CommandMenuPages.commands,
         items: [
           {
             id: Format.translate,
             children: (
               <div className="flex w-full items-center justify-between text-white">
-                <span>Translate to Spanish</span>
+                <span>Select a default language for translation</span>
                 <div className={classes.shortcutContainer}>
                   <kbd className={classes.shortcut}>{currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}</kbd>
                   <kbd className={classes.shortcut}>ALT</kbd>
@@ -54,8 +77,9 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
             keywords: [Format.translate],
             showType: false,
             icon: 'GlobeAltIcon',
+            closeOnSelect: false,
             onClick: () => {
-              onItemSelect(Format.translate);
+              setPage(CommandMenuPages.languages);
             },
           },
           {
@@ -161,19 +185,64 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
     search,
   );
 
+  const languagesItems = filterItems(
+    [
+      {
+        heading: 'Select a Language',
+        id: CommandMenuPages.languages,
+        items: languages.map((language) => ({
+          id: language.value,
+          children: (
+            <div className="flex w-full items-center justify-between text-white">
+              <div className="flex w-full items-center gap-4 text-white">
+                <span data-language-icon>{language.emoji}</span>
+                <span className="">{language.label}</span>
+              </div>
+
+              {defaultLanguage === language.value && <div className={classes.shortcut}>default</div>}
+            </div>
+          ),
+          keywords: [language.label, language.value],
+          showType: false,
+
+          onClick: () => {
+            setDefaultLanguage(language.value);
+            setPage(CommandMenuPages.commands);
+          },
+        })),
+      },
+    ],
+    search,
+  );
+
   return (
     <CommandPalette
-      search={search}
-      isOpen={isOpen}
       onChangeSearch={setSearch}
       onChangeOpen={onChangeOpen}
-      page={'root'}
+      search={search}
+      isOpen={isOpen}
+      page={page}
+      placeholder={placeholder}
     >
-      <CommandPalette.Page id="root">
-        {filteredItems.map((list) => (
+      <CommandPalette.Page id={CommandMenuPages.commands}>
+        {commandsItems.map((list) => (
           <CommandPalette.List key={list.id} heading={list.heading}>
             {list.items.map(({ id, ...rest }) => (
-              <CommandPalette.ListItem className="group" key={id} index={getItemIndex(filteredItems, id)} {...rest} />
+              <CommandPalette.ListItem className="group" key={id} index={getItemIndex(commandsItems, id)} {...rest} />
+            ))}
+          </CommandPalette.List>
+        ))}
+      </CommandPalette.Page>
+
+      <CommandPalette.Page
+        id={CommandMenuPages.languages}
+        searchPrefix={['Languages']}
+        onEscape={() => setPage(CommandMenuPages.commands)}
+      >
+        {languagesItems.map((list) => (
+          <CommandPalette.List key={list.id} heading={list.heading}>
+            {list.items.map(({ id, ...rest }) => (
+              <CommandPalette.ListItem className="group" key={id} index={getItemIndex(languagesItems, id)} {...rest} />
             ))}
           </CommandPalette.List>
         ))}
