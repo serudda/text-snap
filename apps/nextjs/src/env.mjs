@@ -1,14 +1,14 @@
 import { z } from 'zod';
 
 /**
- * Specify your server-side environment variables schema here. This way you can ensure the app isn't
- * built with invalid env vars.
+ * Specify your server-side environment variables schema
+ * here. This way you can ensure the app isn't built with
+ * invalid env vars.
  */
 const server = z.object({
   DATABASE_URL: z.string().url().min(1),
   NODE_ENV: z.enum(['development', 'test', 'production']),
-  NEXTAUTH_SECRET:
-    process.env.NODE_ENV === 'production' ? z.string().min(1) : z.string().min(1).optional(),
+  NEXTAUTH_SECRET: process.env.NODE_ENV === 'production' ? z.string().min(1) : z.string().min(1).optional(),
   NEXTAUTH_URL: z.preprocess(
     // This makes Vercel deployments not fail if you don't set NEXTAUTH_URL
     // Since NextAuth.js automatically uses the VERCEL_URL if present.
@@ -24,18 +24,27 @@ const server = z.object({
 });
 
 /**
- * Specify your client-side environment variables schema here. This way you can ensure the app isn't
- * built with invalid env vars. To expose them to the client, prefix them with `NEXT_PUBLIC_`.
+ * Specify your client-side environment variables schema
+ * here. This way you can ensure the app isn't built with
+ * invalid env vars. To expose them to the client, prefix
+ * them with `NEXT_PUBLIC_`.
  */
 const client = z.object({
   // NEXT_PUBLIC_CLIENTVAR: z.string().min(1),
+  NEXT_PUBLIC_POSTHOG_KEY: z.string().min(1),
+  NEXT_PUBLIC_POSTHOG_HOST: z.string().min(1),
 });
 
 /**
- * You can't destruct `process.env` as a regular object in the Next.js edge runtimes (e.g.
- * middlewares) or client-side so we need to destruct manually.
+ * You can't destruct `process.env` as a regular object in
+ * the Next.js edge runtimes (e.g. middlewares) or
+ * client-side so we need to destruct manually.
  *
- * @type {Record<keyof z.infer<typeof server> | keyof z.infer<typeof client>, string | undefined>}
+ * @type {Record<
+ *   | keyof z.infer<typeof server>
+ *   | keyof z.infer<typeof client>,
+ *   string | undefined
+ * >}
  */
 const processEnv = {
   DATABASE_URL: process.env.DATABASE_URL,
@@ -46,6 +55,8 @@ const processEnv = {
   LEMON_SQUEEZY_API_KEY: process.env.LEMON_SQUEEZY_API_KEY,
   TWITTER_CONSUMER_KEY: process.env.TWITTER_CONSUMER_KEY,
   TWITTER_CONSUMER_SECRET: process.env.TWITTER_CONSUMER_SECRET,
+  NEXT_PUBLIC_POSTHOG_KEY: process.env.NEXT_PUBLIC_POSTHOG_KEY,
+  NEXT_PUBLIC_POSTHOG_HOST: process.env.NEXT_PUBLIC_POSTHOG_HOST,
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
 };
 
@@ -56,7 +67,12 @@ const merged = server.merge(client);
 
 /** @typedef {z.input<typeof merged>} MergedInput */
 /** @typedef {z.infer<typeof merged>} MergedOutput */
-/** @typedef {z.SafeParseReturnType<MergedInput, MergedOutput>} MergedSafeParseReturn */
+/**
+ * @typedef {z.SafeParseReturnType<
+ *   MergedInput,
+ *   MergedOutput
+ * >} MergedSafeParseReturn
+ */
 
 let env = /** @type {MergedOutput} */ (process.env);
 
