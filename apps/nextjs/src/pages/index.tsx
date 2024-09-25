@@ -2,14 +2,7 @@ import { type GetServerSideProps } from 'next';
 import { useEffect, useRef, useState, type ChangeEvent, type ReactElement } from 'react';
 import { type DispatchFormatInputType } from '@acme/api/src/schema/ai.schema';
 import { api, Format } from '~/utils/api';
-import {
-  getDefaultHotkeys,
-  getOS,
-  LocalStorageKeys,
-  OperatingSystem,
-  translateConfig,
-  usePreventHotKey,
-} from '~/common';
+import { getDefaultHotkeys, getOS, LocalStorageKeys, primaryHotkey, translateConfig, usePreventHotKey } from '~/common';
 import { CommandMenu } from '~/components';
 import { languages } from '~/data';
 import { type NextPageWithLayout } from './_app';
@@ -314,9 +307,7 @@ const Home: NextPageWithLayout = ({ userAgent }: HomePageProps) => {
           >
             <span>Formats</span>
             <div className="flex items-center gap-2">
-              <kbd className="flex h-6 items-center rounded-md bg-neutral-900 p-2 text-xs">
-                {currentOS === OperatingSystem.windows ? 'CTRL' : '⌘'}
-              </kbd>
+              <kbd className="flex h-6 items-center rounded-md bg-neutral-900 p-2 text-xs">{primaryHotkey}</kbd>
               <kbd className="flex aspect-square h-6 items-center rounded-md bg-neutral-900 p-2 text-xs">K</kbd>
             </div>
           </button>
