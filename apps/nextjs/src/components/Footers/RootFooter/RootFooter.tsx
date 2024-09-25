@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { primaryHotkey } from '~/common';
+import { definePrimaryHotkey, getOS } from '~/common';
 
 export const RootFooter = () => {
   const prompts = [
@@ -16,6 +16,7 @@ export const RootFooter = () => {
   ];
 
   const [randomPrompt, setRandomPrompt] = useState(prompts[0]);
+  const currentOS = getOS(navigator.userAgent);
 
   useEffect(() => {
     const randomIndex = Math.floor(Math.random() * prompts.length);
@@ -28,7 +29,9 @@ export const RootFooter = () => {
       <div className="flex select-none items-center gap-4 text-neutral-500">
         {randomPrompt}
         <div className="flex items-center gap-2">
-          <kbd className="flex h-6 items-center rounded-md bg-neutral-900 p-2 text-xs">{primaryHotkey}</kbd>
+          <kbd className="flex h-6 items-center rounded-md bg-neutral-900 p-2 text-xs">
+            {definePrimaryHotkey(currentOS)}
+          </kbd>
           <kbd className="flex aspect-square h-6 items-center rounded-md bg-neutral-900 p-2 text-xs">K</kbd>
         </div>
       </div>

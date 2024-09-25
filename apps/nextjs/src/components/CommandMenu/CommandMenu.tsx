@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Format } from '@acme/ai';
 import { type DispatchFormatInputType } from '@acme/api/src/schema/ai.schema';
-import { LocalStorageKeys, primaryHotkey, translateConfig } from '~/common';
+import { definePrimaryHotkey, getOS, LocalStorageKeys, translateConfig } from '~/common';
 import { languages } from '~/data';
 import CommandPalette, { filterItems, getItemIndex } from 'react-cmdk';
 import { cn, Icon, IconCatalog, useLocalStorage } from 'side-ui';
@@ -36,6 +36,7 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
   const [search, setSearch] = useState('');
   const [translateLanguage, setTranslateLanguage] = useState(translateConfigLocalStorage.language);
   const [page, setPage] = useState<CommandMenuPages>(CommandMenuPages.mainMenu);
+  const currentOs = getOS(navigator.userAgent);
 
   const placeholders: Record<CommandMenuPages, string> = {
     [CommandMenuPages.mainMenu]: 'Search a Command',
@@ -59,7 +60,7 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
               <div className="flex w-full items-center justify-between text-white">
                 <span>Translate the text</span>
                 <div className={classes.hotkeysContainer}>
-                  <kbd className={classes.hotkeys}>{primaryHotkey}</kbd>
+                  <kbd className={classes.hotkeys}>{definePrimaryHotkey(currentOs)}</kbd>
                   <kbd className={classes.hotkeys}>ALT</kbd>
                   <kbd className={classes.hotkeys}>T</kbd>
                 </div>
@@ -79,7 +80,7 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
               <div className="flex w-full items-center justify-between text-white">
                 <span>Fix spelling & grammar</span>
                 <div className={classes.hotkeysContainer}>
-                  <kbd className={classes.hotkeys}>{primaryHotkey}</kbd>
+                  <kbd className={classes.hotkeys}>{definePrimaryHotkey(currentOs)}</kbd>
                   <kbd className={classes.hotkeys}>ALT</kbd>
                   <kbd className={classes.hotkeys}>G</kbd>
                 </div>
@@ -98,7 +99,7 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
               <div className="flex w-full items-center justify-between text-white">
                 <span>Make the text shorter</span>
                 <div className={classes.hotkeysContainer}>
-                  <kbd className={classes.hotkeys}>{primaryHotkey}</kbd>
+                  <kbd className={classes.hotkeys}>{definePrimaryHotkey(currentOs)}</kbd>
                   <kbd className={classes.hotkeys}>ALT</kbd>
                   <kbd className={classes.hotkeys}>C</kbd>
                 </div>
@@ -120,7 +121,7 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
                   <p className="dark:text-white">Adjust the formality</p>
                 </div>
                 <div className={classes.hotkeysContainer}>
-                  <kbd className={classes.hotkeys}>{primaryHotkey}</kbd>
+                  <kbd className={classes.hotkeys}>{definePrimaryHotkey(currentOs)}</kbd>
                   <kbd className={classes.hotkeys}>ALT</kbd>
                   <kbd className={classes.hotkeys}>F</kbd>
                 </div>
@@ -138,7 +139,7 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
               <div className="flex w-full items-center justify-between text-white">
                 <span>Add emojis & symbols</span>
                 <div className={classes.hotkeysContainer}>
-                  <kbd className={classes.hotkeys}>{primaryHotkey}</kbd>
+                  <kbd className={classes.hotkeys}>{definePrimaryHotkey(currentOs)}</kbd>
                   <kbd className={classes.hotkeys}>ALT</kbd>
                   <kbd className={classes.hotkeys}>E</kbd>
                 </div>
@@ -157,7 +158,7 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
               <div className="flex w-full items-center justify-between text-white">
                 <span>Improve writing</span>
                 <div className={classes.hotkeysContainer}>
-                  <kbd className={classes.hotkeys}>{primaryHotkey}</kbd>
+                  <kbd className={classes.hotkeys}>{definePrimaryHotkey(currentOs)}</kbd>
                   <kbd className={classes.hotkeys}>ALT</kbd>
                   <kbd className={classes.hotkeys}>I</kbd>
                 </div>
