@@ -1,8 +1,17 @@
 import { type GetServerSideProps } from 'next';
 import { useEffect, useRef, useState, type ChangeEvent, type ReactElement } from 'react';
+import { type DispatchFormatInputType } from '@acme/api/src/schema/ai.schema';
 import { api, Format } from '~/utils/api';
-import { getDefaultShortcuts, getOS, OperatingSystem, usePreventHotKey } from '~/common';
+import {
+  definePrimaryHotkey,
+  getDefaultHotkeys,
+  getOS,
+  LocalStorageKeys,
+  translateConfig,
+  usePreventHotKey,
+} from '~/common';
 import { CommandMenu } from '~/components';
+import { languages } from '~/data';
 import { type NextPageWithLayout } from './_app';
 import { RootLayout } from '~layout';
 import { useHandleOpenCommandPalette } from 'react-cmdk';
@@ -24,6 +33,7 @@ import {
   Tag,
   TagVariant,
   Textarea,
+  useLocalStorage,
   useModal,
 } from 'side-ui';
 
@@ -41,14 +51,14 @@ const Home: NextPageWithLayout = ({ userAgent }: HomePageProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [textVersions, setTextVersions] = useState<Array<TextVersion>>([]);
   const [currentVersion, setCurrentVersion] = useState<TextVersion>();
+  const [translateConfigLocalStorage] = useLocalStorage(LocalStorageKeys.translateConfig, translateConfig);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const currentOS = getOS(userAgent);
-  const shortcuts = getDefaultShortcuts(currentOS);
-  usePreventHotKey();
-
+  const hotkeys = getDefaultHotkeys(currentOS);
   const currentVersionIndex = textVersions.findIndex((version) => version.text === currentVersion?.text);
   const { modalNode, openModal } = useModal();
 
+  usePreventHotKey();
   useHandleOpenCommandPalette(setIsOpen);
 
   useEffect(() => {
@@ -99,12 +109,14 @@ const Home: NextPageWithLayout = ({ userAgent }: HomePageProps) => {
     setTextareaValue(event.target.value);
   };
 
-  const handleHotKey = (formatType: Format) => {
+  const handleHotKey = (formatType: Format, config?: DispatchFormatInputType['selectedFormat']['config']) => {
     if (isLoading) return;
+
     dispatchFormat({
       text: textareaValue,
       selectedFormat: {
         type: formatType,
+        config,
       },
     });
   };
@@ -120,10 +132,15 @@ const Home: NextPageWithLayout = ({ userAgent }: HomePageProps) => {
   };
 
   useHotkeys(
-    shortcuts.translate,
+    hotkeys.translate,
+
     (event) => {
+      const languageConfig = {
+        language: translateConfigLocalStorage?.language || languages[0].value,
+      };
+
       event.preventDefault();
-      void handleHotKey(Format.translate);
+      void handleHotKey(Format.translate, languageConfig);
     },
     {
       enableOnFormTags: ['TEXTAREA'],
@@ -131,7 +148,7 @@ const Home: NextPageWithLayout = ({ userAgent }: HomePageProps) => {
   );
 
   useHotkeys(
-    shortcuts.grammar,
+    hotkeys.grammar,
     (event) => {
       event.preventDefault();
       void handleHotKey(Format.grammar);
@@ -142,7 +159,7 @@ const Home: NextPageWithLayout = ({ userAgent }: HomePageProps) => {
   );
 
   useHotkeys(
-    shortcuts.condense,
+    hotkeys.condense,
     (event) => {
       event.preventDefault();
       void handleHotKey(Format.condense);
@@ -153,7 +170,7 @@ const Home: NextPageWithLayout = ({ userAgent }: HomePageProps) => {
   );
 
   useHotkeys(
-    shortcuts.formality,
+    hotkeys.formality,
     (event) => {
       event.preventDefault();
       void handleHotKey(Format.formality);
@@ -164,7 +181,7 @@ const Home: NextPageWithLayout = ({ userAgent }: HomePageProps) => {
   );
 
   useHotkeys(
-    shortcuts.emoji,
+    hotkeys.emoji,
     (event) => {
       event.preventDefault();
       void handleHotKey(Format.emoji);
@@ -175,7 +192,7 @@ const Home: NextPageWithLayout = ({ userAgent }: HomePageProps) => {
   );
 
   useHotkeys(
-    shortcuts.improve,
+    hotkeys.improve,
     (event) => {
       event.preventDefault();
       void handleHotKey(Format.improve);
@@ -185,9 +202,9 @@ const Home: NextPageWithLayout = ({ userAgent }: HomePageProps) => {
     },
   );
 
-  const handleItemSelect = (itemId: Format) => {
+  const handleItemSelect = (itemId: Format, config?: DispatchFormatInputType['selectedFormat']['config']) => {
     setIsOpen(false);
-    void handleHotKey(itemId);
+    void handleHotKey(itemId, config);
   };
 
   const handleCleanClick = async () => {
@@ -298,7 +315,7 @@ const Home: NextPageWithLayout = ({ userAgent }: HomePageProps) => {
             <span>Formats</span>
             <div className="flex items-center gap-2">
               <kbd className="flex h-6 items-center rounded-md bg-neutral-900 p-2 text-xs">
-                {currentOS === OperatingSystem.windows ? 'CTRL' : '⌘'}
+                {definePrimaryHotkey(currentOS)}
               </kbd>
               <kbd className="flex aspect-square h-6 items-center rounded-md bg-neutral-900 p-2 text-xs">K</kbd>
             </div>

@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
-import { getOS, OperatingSystem } from '~/common';
+import { definePrimaryHotkey, getOS } from '~/common';
 
 export const RootFooter = () => {
-  const currentOs = getOS(navigator.userAgent);
-
   const prompts = [
     'Enhance your text instantly',
     'Transform your words now',
@@ -18,6 +16,7 @@ export const RootFooter = () => {
   ];
 
   const [randomPrompt, setRandomPrompt] = useState(prompts[0]);
+  const currentOS = getOS(navigator.userAgent);
 
   useEffect(() => {
     const randomIndex = Math.floor(Math.random() * prompts.length);
@@ -31,7 +30,7 @@ export const RootFooter = () => {
         {randomPrompt}
         <div className="flex items-center gap-2">
           <kbd className="flex h-6 items-center rounded-md bg-neutral-900 p-2 text-xs">
-            {currentOs === OperatingSystem.windows ? 'CTRL' : '⌘'}
+            {definePrimaryHotkey(currentOS)}
           </kbd>
           <kbd className="flex aspect-square h-6 items-center rounded-md bg-neutral-900 p-2 text-xs">K</kbd>
         </div>

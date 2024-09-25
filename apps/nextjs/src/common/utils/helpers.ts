@@ -1,4 +1,4 @@
-import { OperatingSystem } from '../constants';
+import { KeyboardKey, OperatingSystem } from '../constants';
 
 /**
  * isNullOrUndefined.
@@ -28,4 +28,24 @@ export const getOS = (userAgent = '') => {
   } else {
     return OperatingSystem.other;
   }
+};
+
+/**
+ * The function `definePrimaryHotkey` returns the primary
+ * hotkey based on the current operating system.
+ *
+ * @param {OperatingSystem} currentOs - The `currentOs`
+ *   parameter is a variable representing the operating
+ *   system (OS) on which the function is being executed. It
+ *   is of type `OperatingSystem`, which is likely an enum
+ *   or a defined type that specifies different operating
+ *   systems such as Windows, macOS, Linux, etc. The
+ *   function `define.
+ * @returns The function `definePrimaryHotkey` returns
+ *   either 'CTRL' if the `currentOs` is
+ *   `OperatingSystem.windows`, or '⌘' if the `currentOs` is
+ *   not `OperatingSystem.windows`.
+ */
+export const definePrimaryHotkey = (currentOs: OperatingSystem) => {
+  return currentOs === OperatingSystem.windows ? KeyboardKey.CTRL : '⌘';
 };
