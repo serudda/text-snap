@@ -9,7 +9,7 @@ export type DefaultHotkeys = {
   improve: string;
 };
 
-export const getDefaultShortcuts = (os: OperatingSystem): DefaultHotkeys => {
+export const getDefaultHotkeys = (os: OperatingSystem): DefaultHotkeys => {
   const ctrlOrMeta = os === OperatingSystem.mac ? 'meta' : os === OperatingSystem.windows ? 'ctrl' : 'ctrl';
 
   return {

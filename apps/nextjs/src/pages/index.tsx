@@ -3,7 +3,7 @@ import { useEffect, useRef, useState, type ChangeEvent, type ReactElement } from
 import { type DispatchFormatInputType } from '@acme/api/src/schema/ai.schema';
 import { api, Format } from '~/utils/api';
 import {
-  getDefaultShortcuts,
+  getDefaultHotkeys,
   getOS,
   LocalStorageKeys,
   OperatingSystem,
@@ -54,7 +54,7 @@ const Home: NextPageWithLayout = ({ userAgent }: HomePageProps) => {
   const [translateConfigLocalStorage] = useLocalStorage(LocalStorageKeys.translateConfig, translateConfig);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const currentOS = getOS(userAgent);
-  const shortcuts = getDefaultShortcuts(currentOS);
+  const hotkeys = getDefaultHotkeys(currentOS);
   const currentVersionIndex = textVersions.findIndex((version) => version.text === currentVersion?.text);
   const { modalNode, openModal } = useModal();
 
@@ -132,7 +132,7 @@ const Home: NextPageWithLayout = ({ userAgent }: HomePageProps) => {
   };
 
   useHotkeys(
-    shortcuts.translate,
+    hotkeys.translate,
 
     (event) => {
       const languageConfig = {
@@ -148,7 +148,7 @@ const Home: NextPageWithLayout = ({ userAgent }: HomePageProps) => {
   );
 
   useHotkeys(
-    shortcuts.grammar,
+    hotkeys.grammar,
     (event) => {
       event.preventDefault();
       void handleHotKey(Format.grammar);
@@ -159,7 +159,7 @@ const Home: NextPageWithLayout = ({ userAgent }: HomePageProps) => {
   );
 
   useHotkeys(
-    shortcuts.condense,
+    hotkeys.condense,
     (event) => {
       event.preventDefault();
       void handleHotKey(Format.condense);
@@ -170,7 +170,7 @@ const Home: NextPageWithLayout = ({ userAgent }: HomePageProps) => {
   );
 
   useHotkeys(
-    shortcuts.formality,
+    hotkeys.formality,
     (event) => {
       event.preventDefault();
       void handleHotKey(Format.formality);
@@ -181,7 +181,7 @@ const Home: NextPageWithLayout = ({ userAgent }: HomePageProps) => {
   );
 
   useHotkeys(
-    shortcuts.emoji,
+    hotkeys.emoji,
     (event) => {
       event.preventDefault();
       void handleHotKey(Format.emoji);
@@ -192,7 +192,7 @@ const Home: NextPageWithLayout = ({ userAgent }: HomePageProps) => {
   );
 
   useHotkeys(
-    shortcuts.improve,
+    hotkeys.improve,
     (event) => {
       event.preventDefault();
       void handleHotKey(Format.improve);
