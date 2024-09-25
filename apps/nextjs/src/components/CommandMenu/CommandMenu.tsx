@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Format } from '@acme/ai';
 import { type DispatchFormatInputType } from '@acme/api/src/schema/ai.schema';
-import { definePrimaryHotkey, getOS, LocalStorageKeys, translateConfig } from '~/common';
+import { definePrimaryHotkey, getOS, KeyboardKey, LocalStorageKeys, translateConfig } from '~/common';
 import { languages } from '~/data';
 import CommandPalette, { filterItems, getItemIndex } from 'react-cmdk';
 import { cn, Icon, IconCatalog, useLocalStorage } from 'side-ui';
@@ -61,7 +61,7 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
                 <span>Translate the text</span>
                 <div className={classes.hotkeysContainer}>
                   <kbd className={classes.hotkeys}>{definePrimaryHotkey(currentOs)}</kbd>
-                  <kbd className={classes.hotkeys}>ALT</kbd>
+                  <kbd className={classes.hotkeys}>{KeyboardKey.ALT}</kbd>
                   <kbd className={classes.hotkeys}>T</kbd>
                 </div>
               </div>
@@ -81,7 +81,7 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
                 <span>Fix spelling & grammar</span>
                 <div className={classes.hotkeysContainer}>
                   <kbd className={classes.hotkeys}>{definePrimaryHotkey(currentOs)}</kbd>
-                  <kbd className={classes.hotkeys}>ALT</kbd>
+                  <kbd className={classes.hotkeys}>{KeyboardKey.ALT}</kbd>
                   <kbd className={classes.hotkeys}>G</kbd>
                 </div>
               </div>
@@ -100,7 +100,7 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
                 <span>Make the text shorter</span>
                 <div className={classes.hotkeysContainer}>
                   <kbd className={classes.hotkeys}>{definePrimaryHotkey(currentOs)}</kbd>
-                  <kbd className={classes.hotkeys}>ALT</kbd>
+                  <kbd className={classes.hotkeys}>{KeyboardKey.ALT}</kbd>
                   <kbd className={classes.hotkeys}>C</kbd>
                 </div>
               </div>
@@ -122,7 +122,7 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
                 </div>
                 <div className={classes.hotkeysContainer}>
                   <kbd className={classes.hotkeys}>{definePrimaryHotkey(currentOs)}</kbd>
-                  <kbd className={classes.hotkeys}>ALT</kbd>
+                  <kbd className={classes.hotkeys}>{KeyboardKey.ALT}</kbd>
                   <kbd className={classes.hotkeys}>F</kbd>
                 </div>
               </div>
@@ -140,7 +140,7 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
                 <span>Add emojis & symbols</span>
                 <div className={classes.hotkeysContainer}>
                   <kbd className={classes.hotkeys}>{definePrimaryHotkey(currentOs)}</kbd>
-                  <kbd className={classes.hotkeys}>ALT</kbd>
+                  <kbd className={classes.hotkeys}>{KeyboardKey.ALT}</kbd>
                   <kbd className={classes.hotkeys}>E</kbd>
                 </div>
               </div>
@@ -159,7 +159,7 @@ export const CommandMenu = ({ isOpen, onChangeOpen, onItemSelect }: CommandMenuP
                 <span>Improve writing</span>
                 <div className={classes.hotkeysContainer}>
                   <kbd className={classes.hotkeys}>{definePrimaryHotkey(currentOs)}</kbd>
-                  <kbd className={classes.hotkeys}>ALT</kbd>
+                  <kbd className={classes.hotkeys}>{KeyboardKey.ALT}</kbd>
                   <kbd className={classes.hotkeys}>I</kbd>
                 </div>
               </div>

@@ -1,4 +1,4 @@
-import { OperatingSystem } from '../constants';
+import { KeyboardKey, OperatingSystem } from '../constants';
 
 /**
  * isNullOrUndefined.
@@ -47,5 +47,5 @@ export const getOS = (userAgent = '') => {
  *   not `OperatingSystem.windows`.
  */
 export const definePrimaryHotkey = (currentOs: OperatingSystem) => {
-  return currentOs === OperatingSystem.windows ? 'CTRL' : '⌘';
+  return currentOs === OperatingSystem.windows ? KeyboardKey.CTRL : '⌘';
 };

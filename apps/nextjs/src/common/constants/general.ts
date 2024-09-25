@@ -5,3 +5,9 @@ export enum OperatingSystem {
   windows = 'windows',
   other = 'other',
 }
+
+export enum KeyboardKey {
+  CTRL = 'CTRL',
+  ALT = 'ALT',
+  CMD = 'CMD',
+}
