@@ -1,7 +1,4 @@
-import {
-  createAccountHandler,
-  getAllProvidersByUserIdHandler,
-} from '../controllers/account.controller';
+import { createAccountHandler, getAllProvidersByUserIdHandler } from '../controllers/account.controller';
 import { createAccountInput, getAllProvidersByUserIdInput } from '../schema/account.schema';
 import { createTRPCRouter, publicProcedure } from '../trpc';
 

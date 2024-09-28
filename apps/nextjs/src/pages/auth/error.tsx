@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/react';
 import { AuthError } from '../../common';
+import { useSession } from 'next-auth/react';
 
 const Error: NextPage = () => {
   const router = useRouter();

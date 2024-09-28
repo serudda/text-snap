@@ -1,5 +1,5 @@
+import { prisma, SubscriptionPlanSlug } from '@acme/db';
 import { type User } from 'next-auth';
-import { SubscriptionPlanSlug, prisma } from '@acme/db';
 
 export const createUserSubscriptionHandler = async (user: User) => {
   try {

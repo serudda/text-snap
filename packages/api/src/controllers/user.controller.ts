@@ -1,27 +1,25 @@
+import { PrismaErrorCode, Response, TRPCErrorCode, type Params } from '../common';
+import type { CreateUserInputType, GetUserByEmailInputType, GetUserInputType } from '../schema/user.schema';
 import { Prisma } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
-import { PrismaErrorCode, Response, TRPCErrorCode, type Params } from '../common';
-import type {
-  CreateUserInputType,
-  GetUserByEmailInputType,
-  GetUserInputType,
-} from '../schema/user.schema';
 
 /**
- * Get user by id
- * @param ctx Ctx
- * @param input GetUserInputType
- * @returns User
+ * Get user by id.
+ *
+ * @param ctx Ctx.
+ * @param input GetUserInputType.
+ * @returns User.
  */
 export const getUserByIdHandler = async ({ ctx, input }: Params<GetUserInputType>) =>
   ctx.prisma.user.findUnique({ where: { id: input.id }, include: { subscription: true } });
 
 /**
- * Get user by email
- * @param ctx Ctx
- * @param input GetUserByEmailInputType
- * @returns User
+ * Get user by email.
+ *
+ * @param ctx Ctx.
+ * @param input GetUserByEmailInputType.
+ * @returns User.
  */
 export const getUserByEmailHandler = async ({ ctx, input }: Params<GetUserByEmailInputType>) => {
   return ctx.prisma.user.findUnique({
@@ -35,10 +33,11 @@ export const getUserByEmailHandler = async ({ ctx, input }: Params<GetUserByEmai
 };
 
 /**
- * Create user
- * @param ctx Ctx
- * @param input CreateUserInputType
- * @returns User
+ * Create user.
+ *
+ * @param ctx Ctx.
+ * @param input CreateUserInputType.
+ * @returns User.
  */
 export const createUserHandler = async ({ ctx, input }: Params<CreateUserInputType>) => {
   try {

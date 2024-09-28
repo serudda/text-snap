@@ -32,22 +32,23 @@ export interface Input {
   isRounded?: boolean;
 
   /**
-   * If set to true, the button will display a loading spinner.
+   * If set to true, the button will display a loading
+   * spinner.
    */
   isLoading?: boolean;
 
   /**
-   * Set a label text
+   * Set a label text.
    */
   label?: string;
 
   /**
-   * Set an assistive text
+   * Set an assistive text.
    */
   assistiveText?: string;
 
   /**
-   * Set the Text Input state
+   * Set the Text Input state.
    */
   fieldState?: FormFieldState;
 }

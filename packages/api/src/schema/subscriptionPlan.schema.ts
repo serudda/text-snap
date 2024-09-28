@@ -1,5 +1,5 @@
-import { z, type TypeOf } from 'zod';
 import { SubscriptionPlanSlug } from '@acme/db';
+import { z, type TypeOf } from 'zod';
 
 /*------------------------------------*/
 
@@ -20,9 +20,7 @@ export type GetSubscriptionPlanBySlugInputType = TypeOf<typeof getSubscriptionPl
 export const getSubscriptionPlanByProductIdInput = z.object({
   productId: z.string(),
 });
-export type GetSubscriptionPlanByProductIdInputType = TypeOf<
-  typeof getSubscriptionPlanByProductIdInput
->;
+export type GetSubscriptionPlanByProductIdInputType = TypeOf<typeof getSubscriptionPlanByProductIdInput>;
 
 /*------------------------------------*/
 

@@ -1,5 +1,3 @@
-import { TRPCError } from '@trpc/server';
-import { z } from 'zod';
 import { Response, TRPCErrorCode, type Params } from '../common';
 import type {
   AddUserSubscriptionInputType,
@@ -8,17 +6,17 @@ import type {
   UpdateUserSubscriptionInputType,
 } from '../schema/subscription.schema';
 import { getUserByIdHandler } from './user.controller';
+import { TRPCError } from '@trpc/server';
+import { z } from 'zod';
 
 /**
- * Get user subscription
- * @param ctx Ctx
- * @param input GetUserSubscriptionInputType
- * @returns SubscriptionPlan
+ * Get user subscription.
+ *
+ * @param ctx Ctx.
+ * @param input GetUserSubscriptionInputType.
+ * @returns SubscriptionPlan.
  */
-export const getUserSubscriptionHandler = async ({
-  ctx,
-  input,
-}: Params<GetUserSubscriptionInputType>) =>
+export const getUserSubscriptionHandler = async ({ ctx, input }: Params<GetUserSubscriptionInputType>) =>
   await ctx.prisma.subscription.findFirst({
     where: {
       userId: input.userId,
@@ -29,15 +27,13 @@ export const getUserSubscriptionHandler = async ({
   });
 
 /**
- * Add user subscription
- * @param ctx Ctx
- * @param input AddUserSubscriptionInputType
- * @returns Subscription
+ * Add user subscription.
+ *
+ * @param ctx Ctx.
+ * @param input AddUserSubscriptionInputType.
+ * @returns Subscription.
  */
-export const addUserSubscriptionHandler = async ({
-  ctx,
-  input,
-}: Params<AddUserSubscriptionInputType>) => {
+export const addUserSubscriptionHandler = async ({ ctx, input }: Params<AddUserSubscriptionInputType>) => {
   try {
     const { userId, subscriptionPlanId, frequency, startsAt, endsAt, renewsAt } = input;
 
@@ -91,15 +87,13 @@ export const addUserSubscriptionHandler = async ({
 };
 
 /**
- * Update user subscription
- * @param ctx Ctx
- * @param input UpdateUserSubscriptionInputType
- * @returns Subscription
+ * Update user subscription.
+ *
+ * @param ctx Ctx.
+ * @param input UpdateUserSubscriptionInputType.
+ * @returns Subscription.
  */
-export const updateUserSubscriptionHandler = async ({
-  ctx,
-  input,
-}: Params<UpdateUserSubscriptionInputType>) => {
+export const updateUserSubscriptionHandler = async ({ ctx, input }: Params<UpdateUserSubscriptionInputType>) => {
   try {
     const { userId, subscriptionPlanId, frequency, startsAt, endsAt, renewsAt, isActive } = input;
 
@@ -168,15 +162,13 @@ export const updateUserSubscriptionHandler = async ({
 };
 
 /**
- * Delete user subscription
- * @param ctx Ctx
- * @param input DeleteUserSubscriptionInputType
- * @returns Subscription
+ * Delete user subscription.
+ *
+ * @param ctx Ctx.
+ * @param input DeleteUserSubscriptionInputType.
+ * @returns Subscription.
  */
-export const deleteUserSubscriptionHandler = async ({
-  ctx,
-  input,
-}: Params<DeleteUserSubscriptionInputType>) => {
+export const deleteUserSubscriptionHandler = async ({ ctx, input }: Params<DeleteUserSubscriptionInputType>) => {
   try {
     const { userId } = input;
 

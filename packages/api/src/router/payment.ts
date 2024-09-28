@@ -1,7 +1,4 @@
-import {
-  getVariantByIdHandler,
-  subscriptionCreatedHandler,
-} from '../controllers/lemonSqueezy.controller';
+import { getVariantByIdHandler, subscriptionCreatedHandler } from '../controllers/lemonSqueezy.controller';
 import { getVariantByIdInput, subscriptionCreatedInput } from '../schema/lemonSqueezy.schema';
 import { createTRPCRouter, publicProcedure } from '../trpc';
 
