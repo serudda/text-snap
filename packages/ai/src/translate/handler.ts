@@ -9,7 +9,8 @@ import { LLMChain } from 'langchain/chains';
  * Translate the text to the language.
  *
  * @param text The text to translate.
- * @param config The configuration for the translate function.
+ * @param config The configuration for the translate
+ *   function.
  * @returns The translated text.
  */
 export const translateHandler = async (text: string, config: TranslateFormatConfig): Promise<Response> => {

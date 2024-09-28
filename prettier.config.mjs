@@ -2,7 +2,9 @@
 /** @typedef {import('prettier').Config} PrettierConfig */
 /** @typedef {{ tailwindConfig: string }} TailwindConfig */
 
-/** @type {PrettierConfig | SortImportsConfig | TailwindConfig} */
+/** @type {PrettierConfig
+  | SortImportsConfig
+  | TailwindConfig} */
 const config = {
   arrowParens: 'always',
   bracketSpacing: true,

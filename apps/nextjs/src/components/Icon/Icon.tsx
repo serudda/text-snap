@@ -7,7 +7,7 @@ export enum IconCatalog {
 
 export interface IconProps {
   /**
-   * The icon to display
+   * The icon to display.
    */
   icon: IconCatalog;
 
@@ -22,7 +22,8 @@ export interface IconProps {
   strokeWidth?: number;
 
   /**
-   * Specify an optional className to be added to the component.
+   * Specify an optional className to be added to the
+   * component.
    */
   className?: string;
 
@@ -33,7 +34,7 @@ export interface IconProps {
 }
 
 /**
- * The Icons catalog
+ * The Icons catalog.
  */
 export const Icon = ({
   icon = IconCatalog.arrowLongRight,

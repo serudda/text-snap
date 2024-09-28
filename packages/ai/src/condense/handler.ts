@@ -10,7 +10,8 @@ import { LLMChain } from 'langchain/chains';
  * Change tone of a text.
  *
  * @param text The text to be changed.
- * @param config The configuration for the changeTone function.
+ * @param config The configuration for the changeTone
+ *   function.
  * @returns The changed text.
  */
 export const condenseHandler = async (text: string, config: CondenseFormatConfig): Promise<Response> => {

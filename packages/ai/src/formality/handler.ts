@@ -10,7 +10,8 @@ import { LLMChain } from 'langchain/chains';
  * Change the formality of a text.
  *
  * @param text The text to change the formality.
- * @param config The configuration for the formality function.
+ * @param config The configuration for the formality
+ *   function.
  * @returns The changed text.
  */
 export const formalityHandler = async (text: string, config: FormalityFormatConfig): Promise<Response> => {

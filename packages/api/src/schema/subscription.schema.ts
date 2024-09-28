@@ -1,5 +1,5 @@
-import { z, type TypeOf } from 'zod';
 import { SubscriptionFrequency } from '@acme/db';
+import { z, type TypeOf } from 'zod';
 
 /*------------------------------------*/
 

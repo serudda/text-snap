@@ -2,6 +2,7 @@ import { type SubscriptionFrequency } from '@acme/db';
 
 /**
  * Webhook response (Lemon Squeezy)
+ *
  * @reference https://docs.lemonsqueezy.com/help/webhooks
  */
 export interface LemonSqueezyResponse {
@@ -20,6 +21,7 @@ export interface LemonSqueezyResponse {
 
 /**
  * Variant object (Lemon Squeezy)
+ *
  * @reference https://docs.lemonsqueezy.com/api/variants#the-variant-object
  */
 export interface LemonSqueezyVariant {

@@ -1,7 +1,7 @@
 import { type NextApiRequest, type NextApiResponse } from 'next';
-import { TRPCError } from '@trpc/server';
-import { TRPCErrorCode, appRouter, createTRPCContext } from '@acme/api';
+import { appRouter, createTRPCContext, TRPCErrorCode } from '@acme/api';
 import { type LemonSqueezyResponse } from '~/utils/api';
+import { TRPCError } from '@trpc/server';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   // Create context and caller
