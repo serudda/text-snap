@@ -1,94 +1,127 @@
-![image](https://github.com/Indie-Creator-Community/side-project-starter-kit/assets/10075532/6ef96197-5ac7-4812-a751-eb4308858ad7)
+<!--
+* Contributors: @Zyruks, @Contributor2
+* Last updated on: August 16, 2024
+* Last updated by: @Zyruks
+-->
+![TWON-LITE](https://github.com/user-attachments/assets/659f2f34-71ca-434c-85e4-6bd7712181be)
 
-<!-- GETTING STARTED -->
+# Twon Lite Monorepo Overview 🗂️
 
-## Getting Started
+Welcome to **Twon Lite**! This repository houses multiple services and applications that collectively form the core of our platform. Below is an overview of each application, along with instructions on how to get started.
 
-This repository was created with the intention that it can serve as a base project, oriented to the creation of Side Projects that need to be built in an orderly, scalable and above all that allows to add features quickly.
+## Table of Contents 📑
 
-It is based on [T3 Stack](https://create.t3.gg/) with a few very subjective modifications.
-
-Simply cloning the project, and configuring the environment variables, you should be able to start without any problem.
-
-**More details here:**
-https://twitter.com/serudda/status/1653172466725064705?s=20
+- [Prerequisites 🛠️](#prerequisites-🛠️)
+- [Installation 🚀](#installation-🚀)
+- [Environment Variables 🔑](#environment-variables-🔑)
+- [General Setup ⚙️](#general-setup-⚙️)
+- [Project Structure 📂](#project-structure-📂)
+- [Utilities 🔧](#utilities-🔧)
+- [License 📜](#license-📜)
 
 ---
 
-## Installation
+## Prerequisites 🛠️
 
-### Manual Installation
+Before using this project, ensure you have the following installed:
 
-Here are the steps to execute the project:
+- [Node.js](https://nodejs.org/) (version 20.13.1)
+- [pnpm](https://pnpm.io/) (version 9.9.0)
 
-1. Clone the repo
-   ```sh
-   git clone https://github.com/Indie-Creator-Community/side-project-starter-kit.git
-   ```
-2. Install NPM packages
-   ```sh
-   pnpm install
-   ```
-3. You will find an .env.example file, where you will see the basic variables for the project to work.
+## Installation 🚀
 
-   ```js
-   DISCORD_CLIENT_ID = 'ENTER YOUR CLIENT ID';
-   ```
+To set up the project, clone the repository and install the dependencies:
 
-   4.1 (Optional) Generate Local Database
-   Before proceeding, please ensure that Docker is installed and docker's daemon is running on your system. If you don't have Docker, you will need to install it.
+```sh
+git clone https://github.com/serudda/twon-lite.git
+cd twon-lite
+```
 
-   To generate a local database, execute the following command:
+## Environment Variables 🔑
 
-   ```
-   pnpm db:docker:startup
-   ```
+To run the project, you'll need to configure environment variables.
 
-   This command will create a local database using Docker. Please note that you will need to modify the `DATABASE_URL` variable in your .env.\* file to point to this local database.
+You need to add everything to `.env.local`, but only configure `OPENAI_API_KEY`.
 
-   If you need to shut down the database at any time, you can do so by executing the following command:
+Here's a sample configuration:
 
-   ```
-   pnpm db:docker:shutdown
-   ```
+```sh
+DATABASE_URL=http://localhost:3000
 
-   This will safely shut down the Docker database. Remember to update your `DATABASE_URL` if you switch back to another database.
+NEXTAUTH_SECRET=supersecret
+NEXTAUTH_URL=http://localhost:3000
 
-4. This project uses an .env file depending on the environment in which the app is running.
+LEMON_SQUEEZY_URL=http://localhost:3000
+LEMON_SQUEEZY_API_KEY=http://localhost:3000
 
-   `local: .env.local`
-   `development: .env.development`
-   `production: .env.production`
+TWITTER_CONSUMER_KEY=http://localhost:3000
+TWITTER_CONSUMER_SECRET=http://localhost:3000
 
-5. To make a build of all apps and packages
+OPENAI_API_KEY=<YOUR-OPEN-AI-KEY>
 
-   ```sh
-   pnpm build
-   ```
+NEXT_PUBLIC_POSTHOG_KEY=http://localhost:3000
+NEXT_PUBLIC_POSTHOG_HOST=http://localhost:3000
+```
 
-6. Run the apps/nextjs
+## General Setup ⚙️
 
-   ```sh
-   pnpm dev
-   ```
+From the root of the project, you can run the following commands:
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+1. **Install dependencies**:
 
-### Docker Installation
+```sh
+pnpm install
+```
 
-1. Clone the repo
-   ```sh
-   git clone https://github.com/Indie-Creator-Community/side-project-starter-kit.git
-   ```
-2. Change .env.template to .env.local and change the `DATABASE_URL`
-   ```sh
-   DATABASE_URL="postgresql://root:admin@postgres:5432/started-db?schema=public"
-   ```
-3. execute the following statement
-   ```sh
-   pnpm app:docker:startup
-   ```
-4. to shut down the application
-   ```sh
-   pnpm app:docker:shutdown
-   ```
+2. **Run DB Generate**:
+
+```sh
+pnpm db:generate
+```
+
+3. **Run build**:
+
+```sh
+pnpm build
+```
+
+4. **Run Development**:
+
+```sh
+pnpm dev
+```
+
+### Ports
+
+- **Web Page**: [http://localhost:3000](http://localhost:3000)
+- **Prisma Page**: [http://localhost:5556](http://localhost:5556)
+
+## Project Structure 📂
+
+### Apps
+
+- **`apps/nextjs`**:Main App built with Nextjs.
+- **`apps/payments`**: Manages payment processing
+
+### Packages
+
+- **`packages/ai`**: Contains OpenAI-related functionality. This package includes utilities for handling AI operations such as text formatting, language detection, grammar correction, and content improvement.
+
+- **`packages/api`**: The API package, managing TRPC configuration and controllers for the backend.
+
+- **`packages/auth`**: Manages authentication using NextAuth.
+
+- **`packages/config`**: Contains configuration files and shared settings for the project.
+
+- **`packages/db`**: Prisma-based database management package.
+
+---
+
+## Utilities 🔧
+
+- **ESLint**: Linting tool to maintain code quality.
+- **Prettier**: Code formatter for consistent code style.
+
+## License 📜
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

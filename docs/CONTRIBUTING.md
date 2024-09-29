@@ -9,13 +9,13 @@
 
 **¿Hablas español?** ¡Aquí puedes encontrar la guía de cómo contribuir en español! [CONTRIBUTING_ES.md](ES/CONTRIBUTING_ES.md)
 
-Before contributing, please read and abide by our [Code of Conduct.](https://github.com/serudda/reward-system/Code_of_conduct.MD) We take our code of conduct very seriously and expect all contributors to adhere to it.
+Before contributing, please read and abide by our [Code of Conduct.](https://github.com/serudda/twon-lite/Code_of_conduct.MD) We take our code of conduct very seriously and expect all contributors to adhere to it.
 
 📖 **Check out the project's README for more information.** The README contains more detailed information on how to run the project. To access the README, simply click on the link provided:: [README](../README.md)
 
 ## 👉 Quick Guide
 
-1. 🔍 **Look for an issue to work on in the [GitHub issue tracker.](https://github.com/serudda/reward-system/issues)** If you can't find an issue that suits you, create a new issue. [Learn More](#finding-and-reporting-issues)
+1. 🔍 **Look for an issue to work on in the [GitHub issue tracker.](https://github.com/serudda/twon-lite/issues)** If you can't find an issue that suits you, create a new issue. [Learn More](#finding-and-reporting-issues)
 
 2. 🍴 **Fork the project on GitHub.** [Learn More](#how-to-fork-the-project)
 
@@ -31,13 +31,13 @@ Before contributing, please read and abide by our [Code of Conduct.](https://git
 
 ## Finding and Reporting Issues
 
-If you encounter a bug or have a feature request, you can report it by opening an issue on the [GitHub issue tracker.](https://github.com/serudda/reward-system/issues)
+If you encounter a bug or have a feature request, you can report it by opening an issue on the [GitHub issue tracker.](https://github.com/serudda/twon-lite/issues)
 
 Before creating a new issue, please check if there is already an existing issue that covers your problem or feature request. If you find one, you can add a comment to the existing issue instead of creating a new one.
 
 When you create a new issue, try to provide as much detail as possible about the problem or feature request. If you are reporting a bug, provide steps to reproduce the problem, error messages (if any), and relevant information about your environment.
 
-Including these details will help the maintainers of the project understand the issue and respond more effectively. Thank you for your contribution to the reward-system project.
+Including these details will help the maintainers of the project understand the issue and respond more effectively. Thank you for your contribution to the twon-lite project.
 
 ## How to Fork the project
 
@@ -62,11 +62,11 @@ Once you have forked the repository, you will have a copy of the original reposi
 1. Before creating a new branch from the develop branch, it's a good practice to make sure that your local develop branch is up-to-date with the latest changes from the original repository. To do this, you can run the following command:
 
 ```
-git remote add upstream https://github.com/serudda/reward-system
+git remote add upstream https://github.com/serudda/twon-lite
 git pull upstream develop
 ```
 
-The `git remote add` command is used to add a new remote repository to your local Git repository. In this case, `upstream` is the name of the remote repository being added and https://github.com/serudda/reward-system is the URL of the remote repository.
+The `git remote add` command is used to add a new remote repository to your local Git repository. In this case, `upstream` is the name of the remote repository being added and <https://github.com/serudda/twon-lite> is the URL of the remote repository.
 
 By adding `upstream`, you can then pull the latest changes from the original repository (the one you forked from) using `git pull upstream develop.` This ensures that your local `develop` branch is up-to-date with the latest changes, reducing the chances of merge conflicts when you eventually create a pull request to merge your changes back into the original repository.
 
@@ -79,7 +79,7 @@ git checkout develop
 2. To create a new branch, use the following command in your terminal:
 
 ```
-git checkout -b RS-XX-description develop
+git checkout -b TL-XX-description develop
 ```
 
 Where `XX` is the number of the issue you are working on and `description` is a brief summary of the changes you plan to make. This naming convention helps to keep track of which branch corresponds to which issue.
@@ -98,7 +98,7 @@ Where `XX` is the number of the issue you are working on and `description` is a 
 2. Once your changes are complete, push your branch to your forked repository:
 
 ```
-git push -u origin RS-XX-description
+git push -u origin TL-XX-description
 ```
 
 ## Commit Guidelines
@@ -158,7 +158,7 @@ If you're unsure about the type or scope of your commit, feel free to ask for fe
 
 Once you've made changes and committed them to your branch, it's time to create a pull request (PR) to merge your changes into the main develop branch of the original repository. Here are the steps:
 
-1. Go to the original Reward System repository on GitHub and click on the "Pull requests" tab. [Shortcut](https://github.com/serudda/reward-system/pulls)
+1. Go to the original Reward System repository on GitHub and click on the "Pull requests" tab. [Shortcut](https://github.com/serudda/twon-lite/pulls)
 2. Click on the "New pull request" button.
 3. Select your branch as the "compare" branch and thedevelop branch as the "base" branch.
 
@@ -178,15 +178,15 @@ How to create a PR
 Don't worry if you get any of the below wrong, or if you don't know how. We'll gladly help out.
 Title
 
-The title of your pull request should start with the issue identifier `[RS-XX]` followed by a short description of the change. For example:
+The title of your pull request should start with the issue identifier `[TL-XX]` followed by a short description of the change. For example:
 
 ```
-[RS-12] Add new feature
-[RS-456] Fix bug in rewards calculation
-[RS-789] Update login page styling
+[TL-12] Add new feature
+[TL-456] Fix bug in rewards calculation
+[TL-789] Update login page styling
 ```
 
-The issue identifier `RS-XX` corresponds to the number of the issue that the pull request is addressing. If you're adding a new feature, make sure there's an open issue for it before creating a pull request.
+The issue identifier `TL-XX` corresponds to the number of the issue that the pull request is addressing. If you're adding a new feature, make sure there's an open issue for it before creating a pull request.
 
 ### Description
 
@@ -236,12 +236,6 @@ If you're new to the T3 stack or Turbo Repo, here are some resources that can he
 - [T3 Stack Tutorial](https://www.youtube.com/watch?v=YkOSUVzOAA4)
 - [Turbo Repo tutorial series](https://www.youtube.com/watch?v=mxLLIwZ93nY)
 
-If you're interested in creating a Discord bot with Discord.js, here are some additional resources:
-
-- [Discord.js Documentation](https://discord.js.org/#/docs/main/stable/general/welcome)
-- [Discord.js Guide](https://discordjs.guide/)
-- [CodeLyon Tutorial](https://www.youtube.com/watch?v=7rU_KyudGBY)
-
 These resources should help you understand the basics of T3.js, Turbo Repo, and Discord.js, and get you started with contributing to our project. If you have any questions, don't hesitate to ask on our issue tracker.
 
-We appreciate your contributions to the reward-system project. Your time and effort help make the project better for everyone!
+We appreciate your contributions to the twon-lite project. Your time and effort help make the project better for everyone!

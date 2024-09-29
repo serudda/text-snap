@@ -15,7 +15,7 @@ Antes de contribuir, por favor lee y sigue nuestro [Código de Conducta](./CODE_
 
 ## 👉 Guía rápida
 
-1. 🔍 **Busca un problema en el [rastreador de problemas de GitHub.](https://github.com/serudda/reward-system/issues)** Si no encuentras un problema que se adapte a tus necesidades, crea uno nuevo. [Aprende más](#encontrar-e-informar-problemas)
+1. 🔍 **Busca un problema en el [rastreador de problemas de GitHub.](https://github.com/serudda/twon-lite/issues)** Si no encuentras un problema que se adapte a tus necesidades, crea uno nuevo. [Aprende más](#encontrar-e-informar-problemas)
 
 2. 🍴 **Haz fork al proyecto en GitHub.** [Aprende más](#cómo-hacer-fork-del-proyecto)
 
@@ -31,13 +31,13 @@ Antes de contribuir, por favor lee y sigue nuestro [Código de Conducta](./CODE_
 
 ## Encontrar e Informar Problemas
 
-Si encuentras un error o tienes una solicitud de función, puedes informarla abriendo un problema en el [rastreador de problemas de GitHub.](https://github.com/serudda/reward-system/issues)
+Si encuentras un error o tienes una solicitud de función, puedes informarla abriendo un problema en el [rastreador de problemas de GitHub.](https://github.com/serudda/twon-lite/issues)
 
 Antes de crear un nuevo problema, por favor revisa si ya existe un problema existente que cubra tu problema o solicitud de función. Si encuentras uno, puedes agregar un comentario al problema existente en lugar de crear uno nuevo.
 
 Cuando crees un nuevo problema, trata de proporcionar tanta información como sea posible sobre el problema o la solicitud de función. Si estás informando un error, proporciona los pasos para reproducir el problema, los mensajes de error (si los hay) y la información relevante sobre tu entorno.
 
-Incluir estos detalles ayudará a los mantenedores del proyecto a entender el problema y responder de manera más efectiva. Gracias por tu contribución al proyecto reward-system.
+Incluir estos detalles ayudará a los mantenedores del proyecto a entender el problema y responder de manera más efectiva. Gracias por tu contribución al proyecto twon-lite.
 
 ## Cómo hacer Fork del proyecto
 
@@ -62,11 +62,11 @@ Una vez que hayas forkeado el repositorio, tendrás una copia del repositorio or
 1. Antes de crear una nueva rama a partir de la rama `develop`, es una buena práctica asegurarse de que tu rama `develop` local esté actualizada con los últimos cambios del repositorio original. Para hacer esto, puedes ejecutar el siguiente comando:
 
 ```
-git remote add upstream https://github.com/serudda/reward-system
+git remote add upstream https://github.com/serudda/twon-lite
 git pull upstream develop
 ```
 
-El comando `git remote add` se utiliza para agregar un nuevo repositorio remoto a tu repositorio Git local. En este caso, `upstream` es el nombre del repositorio remoto que se está agregando y https://github.com/serudda/reward-system es la URL del repositorio remoto.
+El comando `git remote add` se utiliza para agregar un nuevo repositorio remoto a tu repositorio Git local. En este caso, `upstream` es el nombre del repositorio remoto que se está agregando y <https://github.com/serudda/twon-lite> es la URL del repositorio remoto.
 
 Al agregar `upstream`, puedes luego actualizar los últimos cambios del repositorio original (el que forkeaste) utilizando `git pull upstream develop`. Esto asegura que tu rama `develop` local esté actualizada con los últimos cambios, reduciendo las posibilidades de conflictos de fusión cuando finalmente crees una solicitud de extracción para fusionar tus cambios de vuelta al repositorio original.
 
@@ -79,7 +79,7 @@ git checkout develop
 2. Para crear una nueva rama, utiliza el siguiente comando en tu terminal:
 
 ```
-git checkout -b RS-XX-description develop
+git checkout -b TL-XX-description develop
 ```
 
 Donde `XX` es el número del problema en el que estás trabajando y `description` es un breve resumen de los cambios que planeas hacer. Esta convención de nomenclatura ayuda a realizar un seguimiento de qué rama corresponde a qué problema.
@@ -98,7 +98,7 @@ Donde `XX` es el número del problema en el que estás trabajando y `description
 2. Una vez que tus cambios estén completos, envía tu rama a tu propia copia del repositorio:
 
 ```
-git push -u origin RS-XX-description
+git push -u origin TL-XX-description
 ```
 
 ## Guia de Commit
@@ -158,7 +158,7 @@ Si no estás seguro acerca del tipo o alcance de tu commit, no dudes en solicita
 
 Una vez que hayas hecho cambios y los hayas confirmado en tu rama, es hora de crear un pull request (PR) para fusionar tus cambios en la rama principal develop del repositorio original. Aquí están los pasos:
 
-1. Ve al repositorio original de Reward System en GitHub y haz clic en la pestaña "Pull requests". [Atajo](https://github.com/serudda/reward-system/pulls)
+1. Ve al repositorio original de Reward System en GitHub y haz clic en la pestaña "Pull requests". [Atajo](https://github.com/serudda/twon-lite/pulls)
 2. Haz clic en el botón "New pull request".
 3. Selecciona tu rama como la rama "compare" y la rama develop como la rama "base".
 4. Verifica que los cambios que hiciste sean los que pretendías hacer.
@@ -177,15 +177,15 @@ Cómo crear un PR
 No te preocupes si te equivocas en alguno de los siguientes puntos o si no sabes cómo hacerlo. Estaremos encantados de ayudarte.
 Título
 
-El título de tu pull request debe comenzar con el identificador de problema `[RS-XX]` seguido de una breve descripción del cambio. Por ejemplo:
+El título de tu pull request debe comenzar con el identificador de problema `[TL-XX]` seguido de una breve descripción del cambio. Por ejemplo:
 
 ```
-[RS-12] Add new feature
-[RS-456] Fix bug in rewards calculation
-[RS-789] Update login page styling
+[TL-12] Add new feature
+[TL-456] Fix bug in rewards calculation
+[TL-789] Update login page styling
 ```
 
-El identificador de problema `RS-XX` corresponde al número del problema que la solicitud de extracción está abordando. Si está agregando una nueva característica, asegúrese de que haya un problema abierto para ella antes de crear una solicitud de extracción.
+El identificador de problema `TL-XX` corresponde al número del problema que la solicitud de extracción está abordando. Si está agregando una nueva característica, asegúrese de que haya un problema abierto para ella antes de crear una solicitud de extracción.
 
 ### Descripción
 
