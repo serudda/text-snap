@@ -17,7 +17,7 @@ Para informar sobre una vulnerabilidad, siga estos pasos:
 
 1. Verifique si la vulnerabilidad ya ha sido reportada buscando en el rastreador de problemas del proyecto.
 
-2. Si la vulnerabilidad aún no ha sido reportada, cree un nuevo problema utilizando nuestra plantilla de informe de seguridad, que se puede encontrar [aquí](https://github.com/serudda/reward-system/issues/new/choose).
+2. Si la vulnerabilidad aún no ha sido reportada, cree un nuevo problema utilizando nuestra plantilla de informe de seguridad, que se puede encontrar [aquí](https://github.com/serudda/twon-lite/issues/new/choose).
 
 3. Proporcione tantos detalles como sea posible sobre la vulnerabilidad, incluidos los pasos para reproducirla y cualquier mensaje de error relevante.
 

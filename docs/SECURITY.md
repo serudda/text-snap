@@ -17,7 +17,7 @@ To report a vulnerability, please follow these steps:
 
 1. Check if the vulnerability has already been reported by searching the project's issue tracker.
 
-2. If the vulnerability has not been reported yet, create a new issue using our security report template, which can be found [here](https://github.com/serudda/reward-system/issues/new/choose).
+2. If the vulnerability has not been reported yet, create a new issue using our security report template, which can be found [here](https://github.com/serudda/twon-lite/issues/new/choose).
 
 3. Provide as much detail as possible about the vulnerability, including steps to reproduce it and any relevant error messages.
 
