@@ -6,7 +6,7 @@
 
 ![x](https://github.com/user-attachments/assets/9245fdb7-ef92-4807-9aa2-5bcda727d4d9)
 
-![Build Status](https://github.com/serudda/twon-lite/actions/workflows/ci.yml/badge.svg)
+![Build Status](https://github.com/serudda/text-snap/actions/workflows/ci.yml/badge.svg)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 # Text Snap Monorepo Overview 🗂️
 
@@ -36,8 +36,8 @@ Before using this project, ensure you have the following installed:
 To set up the project, clone the repository and install the dependencies:
 
 ```sh
-git clone https://github.com/serudda/twon-lite.git
-cd twon-lite
+git clone https://github.com/serudda/text-snap.git
+cd text-snap
 ```
 
 ## Environment Variables 🔑
