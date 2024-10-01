@@ -3,13 +3,14 @@
 * Last updated on: August 16, 2024
 * Last updated by: @Zyruks
 -->
-![TWON-LITE](https://github.com/user-attachments/assets/659f2f34-71ca-434c-85e4-6bd7712181be)
+
+![x](https://github.com/user-attachments/assets/9245fdb7-ef92-4807-9aa2-5bcda727d4d9)
 
 ![Build Status](https://github.com/serudda/twon-lite/actions/workflows/ci.yml/badge.svg)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
-# Twon Lite Monorepo Overview 🗂️
+# Text Snap Monorepo Overview 🗂️
 
-Welcome to **Twon Lite**! This repository houses multiple services and applications that collectively form the core of our platform. Below is an overview of each application, along with instructions on how to get started.
+Welcome to **Text Snap**! This repository houses multiple services and applications that collectively form the core of our platform. Below is an overview of each application, along with instructions on how to get started.
 
 ## Table of Contents 📑
 
