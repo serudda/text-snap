@@ -5,6 +5,8 @@
 -->
 ![TWON-LITE](https://github.com/user-attachments/assets/659f2f34-71ca-434c-85e4-6bd7712181be)
 
+![Build Status](https://github.com/serudda/twon-lite/actions/workflows/ci.yml/badge.svg)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 # Twon Lite Monorepo Overview 🗂️
 
 Welcome to **Twon Lite**! This repository houses multiple services and applications that collectively form the core of our platform. Below is an overview of each application, along with instructions on how to get started.
